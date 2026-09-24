@@ -1,1 +1,1 @@
-![Image](data:image/webp;base64,<image>)
+\[Image: Image, WEBP 96x64\]

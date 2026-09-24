@@ -49,7 +49,7 @@ Three static factories return fresh, independent instances you can adjust furthe
 
 | Member | Type | Default | Effect |
 |---|---|---|---|
-| `ImageMode` | `ImageModeEnum` | `DataUri` | `DataUri` embeds images as base64 data URIs. `Omit` drops them (`ImagesOmitted`). `Placeholder` writes `[Image: alt, PNG 96x64]` (`ImagePlaceholderEmitted`). `External` writes `![alt](name.png)` and returns the bytes in `ConversionResult.Resources`. |
+| `ImageMode` | `ImageModeEnum` | `Placeholder` | `Placeholder` (the default) writes `[Image: alt, PNG 96x64]` (`ImagePlaceholderEmitted`), keeping Markdown small and readable for language models. `DataUri` embeds images as base64 data URIs. `Omit` drops them (`ImagesOmitted`). `External` writes `![alt](name.png)` and returns the bytes in `ConversionResult.Resources`. |
 | `TableSpanMode` | `TableSpanModeEnum` | `Repeat` | Markdown tables cannot merge cells: `Repeat` copies a spanned cell's text into every position it covers, `Empty` leaves the covered positions blank. Either raises `TableSpansFlattened`. |
 | `EscapeHtml` | `bool` | true | When true, a `<` that could open a tag and an `&` that could form an entity are escaped, so text reads back unchanged. When false they pass through and Markdown renderers interpret them as HTML. |
 
@@ -59,7 +59,7 @@ Three static factories return fresh, independent instances you can adjust furthe
 |---|---|---|---|
 | `Mode` | `HtmlOutputModeEnum` | `Document` | `Document` writes a full HTML5 page with head, title and metadata; `Fragment` writes body content only. |
 | `IncludeStylesheet` | `bool` | true | A small embedded stylesheet in `Document` mode. |
-| `ImageMode` | `ImageModeEnum` | `DataUri` | As for Markdown: `<img src="data:...">`, omitted, a `<span class="docconverter-image">` placeholder, or an external file name. |
+| `ImageMode` | `ImageModeEnum` | `DataUri` | Same modes as Markdown, but HTML embeds by default: `<img src="data:...">`, omitted, a `<span class="docconverter-image">` placeholder, or an external file name. |
 
 ## TextOptions
 

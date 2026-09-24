@@ -56,7 +56,7 @@ jobs:
           PKG="$RUNNER_TEMP/docconv-pkg"
           TOOLS="$RUNNER_TEMP/docconv-tools"
           dotnet pack src/DocConverter.Cli/DocConverter.Cli.csproj -c Release -p:TargetFrameworks=net10.0 -o "$PKG"
-          dotnet tool install --tool-path "$TOOLS" --add-source "$PKG" DocConverter.Cli --version 0.1.0
+          dotnet tool install --tool-path "$TOOLS" --add-source "$PKG" DocConverter.Cli --version 0.1.1
           "$TOOLS/docconv" --version
           printf '# Smoke\n\nHello **tool**.\n\n| a | b |\n|---|---|\n| 1 | 2 |\n' > "$RUNNER_TEMP/in.md"
           "$TOOLS/docconv" convert -i "$RUNNER_TEMP/in.md" -o "$RUNNER_TEMP/out.docx"

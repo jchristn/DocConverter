@@ -12,6 +12,6 @@
     <PackageProjectUrl>https://github.com/jchristn/DocConverter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jchristn/DocConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
   </PropertyGroup>
 </Project>

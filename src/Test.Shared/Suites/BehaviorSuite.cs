@@ -188,7 +188,7 @@ namespace Test.Shared.Suites
                 {
                     ConversionOptions o = new ConversionOptions { OcrMode = mode };
                     NotImplementedException ex = await TestSupport.ExpectThrowsAsync<NotImplementedException>(() => withOcr.ConvertToStringAsync(md, DocumentFormatEnum.Markdown, DocumentFormatEnum.Html, o, ct), mode.ToString()).ConfigureAwait(false);
-                    TestSupport.AssertContains(ex.Message, "0.1.0", "message names the release");
+                    TestSupport.AssertContains(ex.Message, "DocConverter " + DocConverter.Observability.DocConverterDiagnostics.Version, "message names the release");
                     await TestSupport.ExpectThrowsAsync<NotImplementedException>(() => withOcr.ReadAsync(md, DocumentFormatEnum.Markdown, o, ct), "read " + mode).ConfigureAwait(false);
                 }
 

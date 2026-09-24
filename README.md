@@ -144,7 +144,8 @@ options.Csv.TableSelection = TableSelectionEnum.All;
 ```
 
 Three presets cover common cases: `ConversionOptions.ForLlmIngestion()` (no images, Markdown friendly),
-`ForArchival()` (images embedded, deterministic output) and `Minimal()`. Every option, with its default and range, is in
+`ForArchival()` (images embedded, deterministic output) and `Minimal()`. Markdown writes image placeholders unless
+`options.Markdown.ImageMode` is set to `ImageModeEnum.DataUri`. Every option, with its default and range, is in
 [docs/OPTIONS.md](docs/OPTIONS.md).
 
 ## Warnings and results
@@ -169,6 +170,7 @@ and `ConversionNotSupportedException` for pairs no registered reader or writer c
 
 ```
 docconv convert -i report.docx -o report.md
+docconv convert -i report.docx -o report.md --images embed   # keep images as base64 data URIs
 docconv convert -i report.docx -o - --to md --quiet          # Markdown to stdout, nothing else on stdout
 cat page.html | docconv convert -i - -o - --from html --to pdf > page.pdf
 docconv detect -i mystery.bin --json
@@ -177,6 +179,11 @@ docconv formats
 
 `--from` is detected from the content when omitted, using the file extension as a hint; `--to` comes from the output
 extension. Pipes carry raw bytes, so binary formats survive stdin and stdout.
+
+Markdown output writes each image as a short text placeholder by default, for example
+`[Image: Revenue by quarter, PNG 640x480]`, so the result stays small and readable for language models. Pass
+`--images embed` to embed images as base64 data URIs, or `--images omit` to drop them. HTML output embeds images by
+default.
 
 ### For agents
 

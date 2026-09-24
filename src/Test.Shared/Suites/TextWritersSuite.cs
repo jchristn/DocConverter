@@ -39,9 +39,23 @@ namespace Test.Shared.Suites
                 TestSupport.Assert(snap.Headings.Contains(ReferenceContent.HeadingCode), "headings");
                 TestSupport.Assert(snap.ListItems.Contains(ReferenceContent.DeepBullet), "deep bullet");
                 foreach (string[] row in ReferenceContent.TableRows) TestSupport.Assert(snap.HasTableRow(row), "row " + string.Join("|", row));
-                TestSupport.AssertEqual(1, snap.ImageCount, "data URI image");
+                TestSupport.AssertEqual(0, snap.ImageCount, "no embedded image by default");
+                TestSupport.Assert(snap.ContainsText("[Image:"), "image placeholder by default");
+                TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.ImagePlaceholderEmitted), "ImagePlaceholderEmitted by default");
+                TestSupport.Assert(Encoding.UTF8.GetString(r.Output).IndexOf("data:image/", StringComparison.Ordinal) < 0, "no base64 payload by default");
                 TestSupport.Assert(snap.LinkUrls.Contains(ReferenceContent.LinkUrl), "link");
                 TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.FormattingLost), "underline loss reported");
+            });
+
+            s.Add("Markdown_EmbedImages", "Markdown with ImageMode DataUri embeds the image as a data URI and raises no image warning", async ct =>
+            {
+                ConversionOptions o = new ConversionOptions();
+                o.Markdown.ImageMode = ImageModeEnum.DataUri;
+                BytesConversionResult r = await c.WriteToBytesAsync(ReferenceContent.ToModel(), DocumentFormatEnum.Markdown, o, ct).ConfigureAwait(false);
+                ContentSnapshot snap = MarkdownInspector.Inspect(r.Output);
+                TestSupport.AssertEqual(1, snap.ImageCount, "data URI image");
+                TestSupport.AssertContains(Encoding.UTF8.GetString(r.Output), "data:image/png;base64,", "base64 payload");
+                TestSupport.Assert(!r.Warnings.Any(w => w.Code == WarningCodeEnum.ImagePlaceholderEmitted), "no placeholder warning");
             });
 
             s.Add("Html_Reference", "HTML output holds every reference element and head metadata, and is script free", async ct =>

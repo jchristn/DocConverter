@@ -38,14 +38,14 @@ namespace Test.Shared.Suites.Cli
                         TestSupport.AssertContains(r.StdoutText, "USAGE:", "help for " + string.Join(" ", args));
                     }
                 }),
-                Case("Version", "--version, -v and version print 'docconv 0.1.0'", async () =>
+                Case("Version", "--version, -v and version print 'docconv <version>' matching the library version", async () =>
                 {
                     foreach (string[] args in new string[][] { new[] { "--version" }, new[] { "-v" }, new[] { "version" }, new[] { "convert", "--version" } })
                     {
                         CliRunResult r = await CliTestRunner.RunAsync(args).ConfigureAwait(false);
                         TestSupport.AssertEqual(0, r.ExitCode, "exit code for " + string.Join(" ", args));
                         TestSupport.AssertEqual("docconv " + CliApplication.Version + "\n", r.StdoutText, "version text");
-                        TestSupport.Assert(CliApplication.Version.StartsWith("0.1.0"), "version is 0.1.0, got " + CliApplication.Version);
+                        TestSupport.AssertEqual(DocConverter.Observability.DocConverterDiagnostics.Version, CliApplication.Version, "tool and library versions match");
                         TestSupport.AssertNotContains(r.StdoutText, "+", "build metadata stripped");
                     }
                 }),

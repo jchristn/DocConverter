@@ -2,6 +2,7 @@ namespace DocConverter.Ocr
 {
     using System;
     using DocConverter.Enums;
+    using DocConverter.Observability;
     using DocConverter.Options;
 
     /// <summary>
@@ -15,7 +16,7 @@ namespace DocConverter.Ocr
             if (provider == null) return;
             if (options.OcrMode == OcrModeEnum.Off) return;
             throw new NotImplementedException(
-                "OCR integration is not implemented in DocConverter 0.1.0. An OCR provider ('"
+                "OCR integration is not implemented in DocConverter " + DocConverterDiagnostics.Version + ". An OCR provider ('"
                 + provider.GetType().Name + "') is configured and OcrMode is " + options.OcrMode
                 + ". Set OcrMode to Off or remove the provider.");
         }

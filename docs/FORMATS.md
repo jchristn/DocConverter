@@ -30,7 +30,7 @@ every warning means. The matrix below is generated from the running code and a t
 
 | Format | Built on | What is written |
 |---|---|---|
-| Markdown | DocConverter | GitHub flavored Markdown: ATX headings, nested lists, task lists, pipe tables, fenced code, quotes. Escaping round trips: text written and read back is unchanged. Images per `MarkdownOptions.ImageMode`. |
+| Markdown | DocConverter | GitHub flavored Markdown: ATX headings, nested lists, task lists, pipe tables, fenced code, quotes. Escaping round trips: text written and read back is unchanged. Images per `MarkdownOptions.ImageMode`: text placeholders by default, base64 data URIs with `DataUri` (`--images embed`). |
 | HTML | DocConverter | HTML5 document or fragment with an optional small stylesheet. Every text node and attribute is encoded; only http, https, mailto, relative and fragment links are written. |
 | Text | DocConverter | Every word, with headings underlined or upper-cased, aligned or tab separated tables, optional wrapping, link URLs in parentheses and image placeholders. |
 | JSON, XML | System.Text.Json, System.Xml | The canonical document form, which reads back exactly. |
@@ -60,17 +60,18 @@ RTF and the image formats are inputs only.
 | Xlsx | F | F | F | F | F | P | P | F | F | P | F |
 | Pptx | F | F | F | F | F | P | P | F | P | F | F |
 | Pdf | F* | F* | F | F* | F* | P | P | F* | P | P | F* |
-| Png | F | F | P | F | F | P | P | F | P | F | F |
-| Jpeg | F | F | P | F | F | P | P | F | P | F | F* |
-| Gif | F | F | P | F | F | P | P | F | P | F | P |
-| Bmp | F | F | P | F | F | P | P | F | P | F | F |
-| Tiff | F | F | P | F | F | P | P | F | P | F | P |
-| WebP | F | F | P | F | F | P | P | F* | P | F* | P |
+| Png | F* | F | P | F | F | P | P | F | P | F | F |
+| Jpeg | F* | F | P | F | F | P | P | F | P | F | F* |
+| Gif | F* | F | P | F | F | P | P | F | P | F | P |
+| Bmp | F* | F | P | F | F | P | P | F | P | F | F |
+| Tiff | F* | F | P | F | F | P | P | F | P | F | P |
+| WebP | F* | F | P | F | F | P | P | F* | P | F* | P |
 
 F: full fidelity. P: projection (lossy by design, documented, warned). F*: full, with a note below. N: not supported.
 
 Notes by pair:
 
+- A text placeholder by default (ImagePlaceholderEmitted); set MarkdownOptions.ImageMode to DataUri (docconv --images embed) to embed the image. Applies to: Png to Markdown, Jpeg to Markdown, Gif to Markdown, Bmp to Markdown, Tiff to Markdown, WebP to Markdown.
 - CMYK JPEG cannot be embedded and becomes a placeholder (ImageFormatUnsupported). Applies to: Jpeg to Pdf.
 - Content is split across slides; long tables continue on extra slides. Applies to: Markdown to Pptx, Html to Pptx, Json to Pptx, Xml to Pptx, Csv to Pptx, Tsv to Pptx, Rtf to Pptx, Docx to Pptx, Xlsx to Pptx, Pdf to Pptx.
 - No OCR: a placeholder names the image (ImagePlaceholderEmitted). Applies to: Png to Text, Png to Csv, Png to Tsv, Png to Xlsx, Jpeg to Text, Jpeg to Csv, Jpeg to Tsv, Jpeg to Xlsx, Gif to Text, Gif to Csv, Gif to Tsv, Gif to Xlsx, Bmp to Text, Bmp to Csv, Bmp to Tsv, Bmp to Xlsx, Tiff to Text, Tiff to Csv, Tiff to Tsv, Tiff to Xlsx, WebP to Text, WebP to Csv, WebP to Tsv, WebP to Xlsx.
@@ -94,6 +95,7 @@ or an agent can see exactly what happened.
 |---|---|---|
 | An image-only source (PNG, JPEG, GIF, BMP, TIFF, WebP) to Text, CSV, TSV or XLSX | One placeholder line or row, for example `[Image: sample.png, PNG 96x64]`. No text is extracted because there is no OCR yet. | `ImagePlaceholderEmitted` |
 | Any image to Text, CSV or TSV, or a block image to XLSX | The same placeholder, in place of the image | `ImagePlaceholderEmitted` |
+| Any image to Markdown, by default | A text placeholder in place of the image, for example `[Image: chart, PNG 640x480]`. Set `MarkdownOptions.ImageMode = DataUri` or pass `--images embed` to embed it. | `ImagePlaceholderEmitted` |
 | Images inside table cells or paragraphs, to XLSX | Omitted | `ImagesOmitted` |
 | GIF, TIFF, WebP or CMYK JPEG in PDF output | A bordered placeholder naming the image, its format and size. PDFsharp cannot embed these formats. | `ImageFormatUnsupported` |
 | Any document to CSV or TSV | Tables only, per `CsvOptions.TableSelection`. Without tables, one row per block. | `NonTableContentDropped`, `FormattingLost` |

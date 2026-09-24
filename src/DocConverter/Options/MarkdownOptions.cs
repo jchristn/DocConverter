@@ -9,9 +9,11 @@ namespace DocConverter.Options
     public class MarkdownOptions
     {
         /// <summary>
-        /// How images are written. Default DataUri (base64 data URI).
+        /// How images are written. Default Placeholder: each image becomes a short text placeholder naming its alt
+        /// text, type and size, so Markdown stays small and readable for language models and indexing. Set DataUri to
+        /// embed images as base64 data URIs, External to write them as side files, or Omit to drop them.
         /// </summary>
-        public ImageModeEnum ImageMode { get; set; } = ImageModeEnum.DataUri;
+        public ImageModeEnum ImageMode { get; set; } = ImageModeEnum.Placeholder;
 
         /// <summary>
         /// How merged table cells are written, since Markdown tables cannot merge cells. Default Repeat.

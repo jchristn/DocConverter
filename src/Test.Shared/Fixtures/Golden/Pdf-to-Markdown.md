@@ -31,7 +31,7 @@ Console.WriteLine(total);
 
 *Simplicity is prerequisite for reliability.*
 
-![](data:image/png;base64,<image>)
+\[Image: page1-image1.png, PNG 16x16\]
 
 Grüße aus Zürich.
 

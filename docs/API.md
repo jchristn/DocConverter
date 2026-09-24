@@ -546,7 +546,7 @@ public static class DocConverterDiagnostics
     public const string Name = "DocConverter";
     public static readonly ActivitySource ActivitySource;
     public static readonly Meter Meter;
-    public static string Version { get; }        // library version, for example "0.1.0"
+    public static string Version { get; }        // library version, for example "0.1.1"
 }
 ```
 

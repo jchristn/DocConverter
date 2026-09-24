@@ -78,7 +78,7 @@ already gone to stdout by the time `--strict` finds a warning, so check the exit
 | `--options <file.json>` | Load conversion options from a JSON file (below). Flags override it. |
 | `--title <text>` | Title written into targets that carry one. |
 | `--no-images` | Drop all images. |
-| `--images <embed\|omit\|placeholder\|external>` | How Markdown and HTML write images. `external` writes the images as files next to the output file and cannot be used with `-o -`. `omit` also drops plain text placeholders. |
+| `--images <embed\|omit\|placeholder\|external>` | How Markdown and HTML write images. By default Markdown writes a short text placeholder per image (`[Image: alt, PNG 96x64]`) and HTML embeds them; pass `--images embed` to embed images in Markdown as base64 data URIs. `external` writes the images as files next to the output file and cannot be used with `-o -`. `omit` also drops plain text placeholders. |
 | `--no-metadata` | Do not carry title, author and other metadata. |
 | `--input-encoding <name>` | Encoding of text input without a byte order mark. Default UTF-8. |
 | `--output-encoding <name>` | Encoding of text output. `utf-8` (default, no BOM), `utf-8-bom`, or any .NET encoding name. |

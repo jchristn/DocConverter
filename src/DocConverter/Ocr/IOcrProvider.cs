@@ -5,7 +5,7 @@ namespace DocConverter.Ocr
     using DocConverter.Model;
 
     /// <summary>
-    /// Recognizes text in images. Reserved extension point: DocConverter 0.1.0 ships no implementation and does not
+    /// Recognizes text in images. Reserved extension point: DocConverter ships no implementation yet and does not
     /// call providers yet. Implementations must be thread safe, because one provider serves concurrent conversions.
     /// </summary>
     public interface IOcrProvider

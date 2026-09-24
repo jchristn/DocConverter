@@ -29,6 +29,7 @@ namespace DocConverter.Registry
         private const string _XlsxProjection = "Tables become sheets; other blocks and image placeholders become rows on a Document sheet (FormattingLost, ImagePlaceholderEmitted).";
         private const string _PptxProjection = "Content is split across slides; long tables continue on extra slides.";
         private const string _ImageNoOcr = "No OCR: a placeholder names the image (ImagePlaceholderEmitted).";
+        private const string _MarkdownImagePlaceholder = "A text placeholder by default (ImagePlaceholderEmitted); set MarkdownOptions.ImageMode to DataUri (docconv --images embed) to embed the image.";
         private const string _ImageNotInPdf = "PDFsharp cannot embed this image format: a placeholder is written (ImageFormatUnsupported).";
 
         internal static bool TryGet(DocumentFormatEnum from, DocumentFormatEnum to, out FidelityEnum fidelity, out string notes)
@@ -59,6 +60,9 @@ namespace DocConverter.Registry
                             notes = "CMYK JPEG cannot be embedded and becomes a placeholder (ImageFormatUnsupported).";
                         }
 
+                        return true;
+                    case DocumentFormatEnum.Markdown:
+                        notes = _MarkdownImagePlaceholder;
                         return true;
                     case DocumentFormatEnum.Docx:
                     case DocumentFormatEnum.Pptx:

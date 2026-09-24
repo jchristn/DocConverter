@@ -35,7 +35,7 @@ namespace DocConverter.Cli
         }
 
         /// <summary>
-        /// The tool version without build metadata, for example "0.1.0".
+        /// The tool version without build metadata, for example "0.1.1".
         /// </summary>
         public static string Version
         {

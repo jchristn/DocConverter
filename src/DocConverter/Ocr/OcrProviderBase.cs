@@ -7,7 +7,7 @@ namespace DocConverter.Ocr
 
     /// <summary>
     /// Convenience base class for OCR providers. Every member throws NotImplementedException until a derived class
-    /// overrides it. Reserved extension point: DocConverter 0.1.0 ships no implementation.
+    /// overrides it. Reserved extension point: DocConverter ships no implementation yet.
     /// </summary>
     public abstract class OcrProviderBase : IOcrProvider
     {

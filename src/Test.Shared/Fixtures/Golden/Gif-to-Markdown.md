@@ -1,1 +1,1 @@
-![Image](data:image/gif;base64,<image>)
+\[Image: Image, GIF 96x64\]

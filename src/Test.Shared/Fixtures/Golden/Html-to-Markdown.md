@@ -33,7 +33,7 @@ Console.WriteLine(total);
 
 > Simplicity is prerequisite for reliability.
 
-![Reference image](data:image/png;base64,<image>)
+\[Image: Reference image, PNG 16x16\]
 
 Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.
 

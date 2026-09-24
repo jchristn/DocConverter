@@ -30,6 +30,10 @@ namespace Test.Shared.Suites
             SuiteBuilder s = new SuiteBuilder("RoundTrip", "Round trips, input shapes and determinism");
             Converter c = new Converter();
 
+            // Structural round trips check full fidelity, so Markdown embeds images instead of the default placeholders.
+            ConversionOptions embed = new ConversionOptions();
+            embed.Markdown.ImageMode = ImageModeEnum.DataUri;
+
             foreach (SourceSpec source in MatrixCatalog.Sources)
             {
                 SourceSpec src = source;
@@ -101,7 +105,7 @@ namespace Test.Shared.Suites
                 DocumentFormatEnum format = via;
                 s.Add("Structure_" + format, "Reference model through " + format + " and back keeps headings, lists, table, code, quote, image and styles", async ct =>
                 {
-                    byte[] bytes = (await c.WriteToBytesAsync(ReferenceContent.ToModel(), format, null, ct).ConfigureAwait(false)).Output;
+                    byte[] bytes = (await c.WriteToBytesAsync(ReferenceContent.ToModel(), format, embed, ct).ConfigureAwait(false)).Output;
                     DocumentModel back = await c.ReadAsync(bytes, format, null, ct).ConfigureAwait(false);
                     TextReadersSuite.AssertRichReference(back, format != DocumentFormatEnum.Markdown, format != DocumentFormatEnum.Docx);
                 });
@@ -110,7 +114,7 @@ namespace Test.Shared.Suites
             s.Add("MarkdownDocxMarkdown", "Markdown to DOCX to Markdown keeps the reference structure", async ct =>
             {
                 byte[] docx = (await c.ConvertToBytesAsync(TextFixtures.Reference(DocumentFormatEnum.Markdown), DocumentFormatEnum.Markdown, DocumentFormatEnum.Docx, null, ct).ConfigureAwait(false)).Output;
-                byte[] md = (await c.ConvertToBytesAsync(docx, DocumentFormatEnum.Docx, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false)).Output;
+                byte[] md = (await c.ConvertToBytesAsync(docx, DocumentFormatEnum.Docx, DocumentFormatEnum.Markdown, embed, ct).ConfigureAwait(false)).Output;
                 DocumentModel back = await c.ReadAsync(md, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false);
                 TextReadersSuite.AssertRichReference(back, false, false);
             });

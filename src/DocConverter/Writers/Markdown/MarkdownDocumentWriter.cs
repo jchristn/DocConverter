@@ -302,7 +302,7 @@ namespace DocConverter.Writers.Markdown
 
             if (mode == ImageModeEnum.Placeholder || resource == null)
             {
-                state.Context.AddWarning(WarningCodeEnum.ImagePlaceholderEmitted, "Images were written as text placeholders.");
+                state.Context.AddWarning(WarningCodeEnum.ImagePlaceholderEmitted, "Images were written as text placeholders. Set MarkdownOptions.ImageMode to DataUri (docconv --images embed) to embed them.");
                 return EscapeText(state, ImagePlaceholder.Describe(altText, resourceId, state.Document.Resources));
             }
 

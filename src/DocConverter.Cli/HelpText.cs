@@ -38,6 +38,7 @@ CONVERT:
         --title <text>            Title written into targets that carry one
         --no-images               Drop all images
         --images <mode>           embed, omit, placeholder or external (Markdown and HTML).
+                                  Default: placeholder for Markdown, embed for HTML.
                                   external writes image files next to the output file
         --no-metadata             Do not carry title, author and other metadata
         --input-encoding <name>   Encoding of text input (default: byte order mark, then utf-8)

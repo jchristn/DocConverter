@@ -1,1 +1,1 @@
-![Image](data:image/jpeg;base64,<image>)
+\[Image: Image, JPEG 96x64\]

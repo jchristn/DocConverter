@@ -5,7 +5,25 @@ All notable changes to DocConverter are documented here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). While the version is below 1.0.0, any
 release may carry breaking changes.
 
-## [0.1.0] - Unreleased
+## [0.1.1] - 2026-09-24
+
+### Changed
+
+- Markdown output writes images as text placeholders by default (`MarkdownOptions.ImageMode` is now `Placeholder`),
+  for example `[Image: Revenue by quarter, PNG 640x480]`, with the `ImagePlaceholderEmitted` warning. Base64 payloads
+  made Markdown large and noisy for language models. Set `ImageMode` to `DataUri`, or pass `docconv --images embed`,
+  to embed images as before. HTML output still embeds images by default.
+
+### Fixed
+
+- XML whose elements share names with HTML (for example `<body>` or `<title>` in a data document) is detected as XML,
+  not HTML.
+- Nested JSON values in table cells are written as compact one-line JSON, so Markdown table rows stay intact.
+- Markdown table cells turn CRLF, CR and hard line breaks into `<br>` instead of breaking the row.
+- The PDF reader extracts JPEG images wrapped in Flate compression and reports `NoTextLayer` for every scanned page.
+- Empty rows and columns are dropped from tables detected in PDFs.
+
+## [0.1.0] - Not published
 
 The first release. DocConverter converts documents between formats in memory, through one intermediate document
 model, and ships as a library and as the `docconv` global tool.

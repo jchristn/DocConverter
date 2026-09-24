@@ -153,7 +153,19 @@ namespace Test.Shared.Suites.Cli
                 {
                     string md = await PipeAsync(CliSamples.MarkdownWithImage(), "md", "md", "--images", "omit").ConfigureAwait(false);
                     TestSupport.AssertNotContains(md, "data:image", "no image");
+                    TestSupport.AssertNotContains(md, "Image: red square", "no placeholder");
                     TestSupport.AssertContains(md, "After the image.", "text kept");
+                }),
+                Case("ImagesMarkdownDefault", "Markdown output writes image placeholders by default, with no base64 payload", async () =>
+                {
+                    string md = await PipeAsync(CliSamples.MarkdownWithImage(), "md", "md").ConfigureAwait(false);
+                    TestSupport.AssertContains(md, "Image: red square, PNG 4x4", "placeholder");
+                    TestSupport.AssertNotContains(md, "data:image", "no base64 payload");
+                }),
+                Case("ImagesEmbed", "--images embed keeps images in Markdown as data URIs", async () =>
+                {
+                    string md = await PipeAsync(CliSamples.MarkdownWithImage(), "md", "md", "--images", "embed").ConfigureAwait(false);
+                    TestSupport.AssertContains(md, "](data:image/png;base64,", "data URI image");
                 }),
                 Case("ImagesExternal", "--images external writes side files next to the output", async () =>
                 {

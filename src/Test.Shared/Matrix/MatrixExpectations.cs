@@ -63,7 +63,7 @@ namespace Test.Shared.Matrix
             // Images.
             if (source.HasImage)
             {
-                if (target == DocumentFormatEnum.Markdown || target == DocumentFormatEnum.Html || target == DocumentFormatEnum.Json || target == DocumentFormatEnum.Xml
+                if (target == DocumentFormatEnum.Html || target == DocumentFormatEnum.Json || target == DocumentFormatEnum.Xml
                     || target == DocumentFormatEnum.Docx || target == DocumentFormatEnum.Pptx)
                 {
                     TestSupport.Assert(snap.ImageCount >= 1, pair + ": image missing");
@@ -72,9 +72,12 @@ namespace Test.Shared.Matrix
                 {
                     TestSupport.Assert(snap.ImageCount >= 1 || snap.ContainsText("[Image:"), pair + ": image or placeholder missing");
                 }
-                else if (target == DocumentFormatEnum.Text)
+                else if (target == DocumentFormatEnum.Text || target == DocumentFormatEnum.Markdown)
                 {
+                    // Markdown writes image placeholders by default (MarkdownOptions.ImageMode = Placeholder).
                     TestSupport.Assert(snap.ContainsText("[Image:"), pair + ": image placeholder missing");
+                    if (target == DocumentFormatEnum.Markdown)
+                        TestSupport.AssertEqual(0, snap.ImageCount, pair + ": no embedded image by default");
                 }
             }
         }
@@ -83,7 +86,6 @@ namespace Test.Shared.Matrix
         {
             switch (target)
             {
-                case DocumentFormatEnum.Markdown:
                 case DocumentFormatEnum.Html:
                 case DocumentFormatEnum.Json:
                 case DocumentFormatEnum.Xml:
