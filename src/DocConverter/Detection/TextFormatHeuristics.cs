@@ -29,6 +29,7 @@ namespace DocConverter.Detection
         private static readonly Regex _Emphasis = new Regex(@"(\*\*|__)[^*_\s][^*_]*(\*\*|__)", RegexOptions.Compiled);
         private static readonly Regex _Setext = new Regex(@"^\s{0,3}(=+|-+)\s*$", RegexOptions.Compiled);
         private static readonly Regex _HtmlTag = new Regex(@"<(html|head|body|div|p|span|table|ul|ol|li|h[1-6]|a|br|img|section|article)(\s[^>]*)?/?>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex _HtmlElementName = new Regex(@"^(html|head|body|div|p|span|table|ul|ol|li|h[1-6]|a|br|img|section|article|main|header|footer|nav|form|pre|blockquote)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         internal static bool IsJson(byte[] d, int offset, int length)
         {
@@ -74,6 +75,11 @@ namespace DocConverter.Detection
             {
                 return null;
             }
+        }
+
+        internal static bool IsHtmlElementName(string name)
+        {
+            return _HtmlElementName.IsMatch(name);
         }
 
         internal static bool LooksLikeHtml(string text)

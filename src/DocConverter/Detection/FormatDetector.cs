@@ -91,16 +91,24 @@ namespace DocConverter.Detection
 
             if (trimmed.StartsWith("<", StringComparison.Ordinal))
             {
-                if (TextFormatHeuristics.LooksLikeHtml(trimmed) && !(hint.HasValue && hint.Value == DocumentFormatEnum.Xml))
-                    return Supported(DocumentFormatEnum.Html, "HTML document", DetectionConfidenceEnum.Heuristic);
+                bool xmlHint = hint.HasValue && hint.Value == DocumentFormatEnum.Xml;
 
+                // Well-formed markup whose root is not an HTML element is XML, even when it contains element names
+                // shared with HTML (for example <body> or <title> in a data document).
                 string? root = TextFormatHeuristics.XmlRootName(trimmed);
                 if (root != null)
                 {
-                    if (string.Equals(root, "html", StringComparison.OrdinalIgnoreCase) && !(hint.HasValue && hint.Value == DocumentFormatEnum.Xml))
+                    if (string.Equals(root, "html", StringComparison.OrdinalIgnoreCase) && !xmlHint)
                         return Supported(DocumentFormatEnum.Html, "XHTML document", DetectionConfidenceEnum.Structure);
-                    return Supported(DocumentFormatEnum.Xml, "XML document", DetectionConfidenceEnum.Structure);
+                    if (!TextFormatHeuristics.IsHtmlElementName(root) || xmlHint)
+                        return Supported(DocumentFormatEnum.Xml, "XML document", DetectionConfidenceEnum.Structure);
                 }
+
+                if (TextFormatHeuristics.LooksLikeHtml(trimmed) && !xmlHint)
+                    return Supported(DocumentFormatEnum.Html, "HTML document", DetectionConfidenceEnum.Heuristic);
+
+                if (root != null)
+                    return Supported(DocumentFormatEnum.Xml, "XML document", DetectionConfidenceEnum.Structure);
 
                 // An XML declaration identifies XML even when the body cannot be parsed safely (for example a DOCTYPE
                 // declaring external entities). The reader then refuses it with a clear error.

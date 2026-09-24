@@ -162,6 +162,10 @@ namespace Test.Shared.Suites
                 TestSupport.AssertEqual<DocumentFormatEnum?>(DocumentFormatEnum.Xml, (await converter.DetectFormatAsync(svg, null, ct).ConfigureAwait(false)).Format, "svg is xml");
                 byte[] fragment = Encoding.UTF8.GetBytes("<p>Hello <b>there</b></p><p>Again</p>");
                 TestSupport.AssertEqual<DocumentFormatEnum?>(DocumentFormatEnum.Html, (await converter.DetectFormatAsync(fragment, null, ct).ConfigureAwait(false)).Format, "html fragment");
+                byte[] note = Encoding.UTF8.GetBytes("<?xml version=\"1.0\"?>\n<note>\n<to>Tove</to>\n<heading>Reminder</heading>\n<body>Don't forget</body>\n</note>");
+                TestSupport.AssertEqual<DocumentFormatEnum?>(DocumentFormatEnum.Xml, (await converter.DetectFormatAsync(note, null, ct).ConfigureAwait(false)).Format, "xml with body element");
+                byte[] catalog = Encoding.UTF8.GetBytes("<CATALOG><CD><TITLE>A</TITLE></CD><CD><TITLE>B</TITLE></CD></CATALOG>");
+                TestSupport.AssertEqual<DocumentFormatEnum?>(DocumentFormatEnum.Xml, (await converter.DetectFormatAsync(catalog, null, ct).ConfigureAwait(false)).Format, "xml with title elements");
             });
 
             s.Add("MarkdownHeuristics", "Markdown signals are scored; prose without them is Text", async ct =>

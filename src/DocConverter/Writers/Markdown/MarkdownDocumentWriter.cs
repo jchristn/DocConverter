@@ -175,7 +175,8 @@ namespace DocConverter.Writers.Markdown
                     string text = !grid.HadSpans && c < source.Cells.Count
                         ? RenderCell(source.Cells[c], state)
                         : EscapeText(state, grid.Rows[r][c]);
-                    row.Add(text.Replace("\n", "<br>"));
+                    // A table row must stay on one line, so every line ending (and hard break) becomes <br>.
+                    row.Add(text.Replace("\\\n", "\n").Replace("\r\n", "\n").Replace('\r', '\n').Replace("\n", "<br>"));
                 }
 
                 cells.Add(row);

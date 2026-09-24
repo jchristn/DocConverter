@@ -5,6 +5,7 @@ namespace DocConverter.Readers.Json
     using System.Globalization;
     using System.IO;
     using System.Text;
+    using System.Text.Encodings.Web;
     using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
@@ -73,7 +74,7 @@ namespace DocConverter.Readers.Json
             if (depth >= context.MaxNestingDepth)
             {
                 context.AddWarning(WarningCodeEnum.NestedDepthLimited, "JSON nested deeper than " + context.MaxNestingDepth + " levels was written as compact JSON text.");
-                target.Add(new ParagraphBlock((key != null ? key + ": " : "") + value.GetRawText()));
+                target.Add(new ParagraphBlock((key != null ? key + ": " : "") + Compact(value)));
                 return;
             }
 
@@ -177,7 +178,7 @@ namespace DocConverter.Readers.Json
                     {
                         string cellText = "";
                         if (item.TryGetProperty(column, out JsonElement v))
-                            cellText = IsScalar(v) ? Scalar(v) : v.GetRawText();
+                            cellText = IsScalar(v) ? Scalar(v) : Compact(v);
                         row.Cells.Add(new TableCell(cellText));
                     }
 
@@ -199,6 +200,19 @@ namespace DocConverter.Readers.Json
         private static bool IsScalar(JsonElement value)
         {
             return value.ValueKind != JsonValueKind.Object && value.ValueKind != JsonValueKind.Array;
+        }
+
+        private static string Compact(JsonElement value)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (Utf8JsonWriter writer = new Utf8JsonWriter(ms, new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }))
+                {
+                    value.WriteTo(writer);
+                }
+
+                return Encoding.UTF8.GetString(ms.ToArray());
+            }
         }
 
         private static string Scalar(JsonElement value)

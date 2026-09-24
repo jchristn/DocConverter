@@ -127,7 +127,27 @@ namespace Test.Shared.Suites
                 TestSupport.Assert(ModelInspector.AllBlocks(m.Blocks).OfType<SectionBlock>().Any(x => x.Title == "notes"), "nested object is a titled section");
             });
 
-            s.Add("Json_Canonical", "Canonical JSON reads back to exactly the reference model", async ct =>
+            s.Add("Json_NestedCellsCompact", "Nested values in an array of objects become compact one-line JSON cells, so Markdown table rows stay intact", async ct =>
+            {
+                string json = "{\r\n  \"colors\": [\r\n    {\r\n      \"color\": \"black\",\r\n      \"code\": {\r\n        \"rgba\": [0, 0, 0, 1],\r\n        \"name\": \"noir é\"\r\n      }\r\n    }\r\n  ]\r\n}";
+                StringConversionResult r = await c.ConvertToStringAsync(json, DocumentFormatEnum.Json, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false);
+                TestSupport.AssertContains(r.Output, "{\"rgba\":\\[0,0,0,1\\],\"name\":\"noir é\"}", "compact nested cell");
+                foreach (string line in r.Output.Split('\n'))
+                {
+                    if (line.Length > 0 && line.IndexOf("rgba", StringComparison.Ordinal) >= 0)
+                        TestSupport.Assert(line.StartsWith("| black", StringComparison.Ordinal) && line.EndsWith("|", StringComparison.Ordinal), "row on one line: " + line);
+                }
+
+                DocumentModel m = new DocumentModel();
+                TableBlock table = new TableBlock();
+                table.Rows.Add(new TableRow(new[] { "A" }));
+                table.Rows.Add(new TableRow(new[] { "one\r\ntwo\rthree" }));
+                m.Blocks.Add(table);
+                StringConversionResult md = await c.WriteToStringAsync(m, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false);
+                TestSupport.AssertContains(md.Output, "| one<br>two<br>three |", "cell line endings become <br>");
+            });
+
+            s.Add("Json_Canonical","Canonical JSON reads back to exactly the reference model", async ct =>
             {
                 DocumentModel m = await c.ReadAsync(TextFixtures.CanonicalJson(), DocumentFormatEnum.Json, null, ct).ConfigureAwait(false);
                 ModelComparer.AssertEqual(ReferenceContent.ToModel(), m, "canonical JSON");
