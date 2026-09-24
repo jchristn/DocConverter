@@ -47,3 +47,6 @@ installers/
 .tools/
 out/
 *.docconv-test/
+
+# Local agent tooling
+.claude/
