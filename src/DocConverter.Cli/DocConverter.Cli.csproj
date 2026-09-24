@@ -10,6 +10,7 @@
     <Description>docconv: command line document conversion for humans and agents. Built on the DocConverter library.</Description>
     <PackageTags>document;conversion;cli;dotnet-tool;agent;markdown;pdf;docx</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
+    <ApplicationIcon>..\..\assets\icon.ico</ApplicationIcon>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -22,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
-    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" />
-    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" Link="README.md" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" Link="LICENSE.md" />
+    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" Link="icon.png" />
   </ItemGroup>
 
   <ItemGroup>

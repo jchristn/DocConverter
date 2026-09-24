@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/jchristn/DocConverter/main/assets/icon.png" alt="DocConverter" width="128" height="128" />
+<img src="assets/icon.png" alt="DocConverter" width="128" height="128" />
 
 [![NuGet](https://img.shields.io/nuget/v/DocConverter.svg)](https://www.nuget.org/packages/DocConverter/)
 [![NuGet](https://img.shields.io/nuget/v/DocConverter.Cli.svg?label=DocConverter.Cli)](https://www.nuget.org/packages/DocConverter.Cli/)
