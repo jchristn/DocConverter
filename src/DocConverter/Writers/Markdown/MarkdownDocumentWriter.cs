@@ -99,7 +99,7 @@ namespace DocConverter.Writers.Markdown
                     return "";
                 case SectionBlock section:
                     List<string> sectionParts = new List<string>();
-                    if (!string.IsNullOrEmpty(section.Title))
+                    if (SectionTitles.ShouldRender(section))
                     {
                         int level = Math.Min(6, 2 + sectionDepth);
                         sectionParts.Add(new string('#', level) + " " + EscapeText(section.Title!));

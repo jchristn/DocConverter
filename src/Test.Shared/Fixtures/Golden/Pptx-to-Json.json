@@ -1,0 +1,526 @@
+{
+  "docconverter": "1",
+  "metadata": {
+    "title": "DocConverter Reference Document",
+    "author": "DocConverter Tests"
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "sourceSlide": 1,
+      "kind": "Slide",
+      "title": "Reference Document",
+      "blocks": [
+        {
+          "type": "heading",
+          "sourceSlide": 1,
+          "level": 1,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Reference Document"
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "sourceSlide": 1,
+          "level": 2,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Reference content"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "sourceSlide": 2,
+      "kind": "Slide",
+      "title": "Lists",
+      "blocks": [
+        {
+          "type": "heading",
+          "sourceSlide": 2,
+          "level": 1,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Lists"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "sourceSlide": 2,
+          "kind": "Unordered",
+          "items": [
+            {
+              "blocks": [
+                {
+                  "type": "paragraph",
+                  "inlines": [
+                    {
+                      "type": "text",
+                      "text": "First bullet"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "blocks": [
+                {
+                  "type": "paragraph",
+                  "inlines": [
+                    {
+                      "type": "text",
+                      "text": "Second bullet"
+                    }
+                  ]
+                },
+                {
+                  "type": "list",
+                  "kind": "Unordered",
+                  "items": [
+                    {
+                      "blocks": [
+                        {
+                          "type": "paragraph",
+                          "inlines": [
+                            {
+                              "type": "text",
+                              "text": "Nested bullet A"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "list",
+                          "kind": "Unordered",
+                          "items": [
+                            {
+                              "blocks": [
+                                {
+                                  "type": "paragraph",
+                                  "inlines": [
+                                    {
+                                      "type": "text",
+                                      "text": "Deep bullet"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "blocks": [
+                {
+                  "type": "paragraph",
+                  "inlines": [
+                    {
+                      "type": "text",
+                      "text": "Third bullet"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "sourceSlide": 2,
+          "kind": "Ordered",
+          "start": 1,
+          "items": [
+            {
+              "blocks": [
+                {
+                  "type": "paragraph",
+                  "inlines": [
+                    {
+                      "type": "text",
+                      "text": "Step one"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "blocks": [
+                {
+                  "type": "paragraph",
+                  "inlines": [
+                    {
+                      "type": "text",
+                      "text": "Step two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "blocks": [
+                {
+                  "type": "paragraph",
+                  "inlines": [
+                    {
+                      "type": "text",
+                      "text": "Step three"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "sourceSlide": 3,
+      "kind": "Slide",
+      "title": "Table",
+      "blocks": [
+        {
+          "type": "heading",
+          "sourceSlide": 3,
+          "level": 1,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Table"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "sourceSlide": 3,
+          "rows": [
+            {
+              "cells": [
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Name"
+                        }
+                      ]
+                    }
+                  ],
+                  "header": true
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Role"
+                        }
+                      ]
+                    }
+                  ],
+                  "header": true
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Years"
+                        }
+                      ]
+                    }
+                  ],
+                  "header": true
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Ada Lovelace"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Engineer"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "7"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Grace Hopper"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Admiral"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "40"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Alan Turing"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "Mathematician"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "blocks": [
+                    {
+                      "type": "paragraph",
+                      "inlines": [
+                        {
+                          "type": "text",
+                          "text": "12"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "headerRowCount": 1
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "sourceSlide": 4,
+      "kind": "Slide",
+      "title": "Media",
+      "blocks": [
+        {
+          "type": "heading",
+          "sourceSlide": 4,
+          "level": 1,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Media"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "sourceSlide": 4,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "This paragraph has "
+            },
+            {
+              "type": "text",
+              "text": "bold text",
+              "style": [
+                "Bold"
+              ]
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "text",
+              "text": "italic text",
+              "style": [
+                "Italic"
+              ]
+            },
+            {
+              "type": "text",
+              "text": " and "
+            },
+            {
+              "type": "text",
+              "text": "inline code",
+              "style": [
+                "Code"
+              ]
+            },
+            {
+              "type": "text",
+              "text": " and a "
+            },
+            {
+              "type": "link",
+              "url": "https://example.com/docs",
+              "inlines": [
+                {
+                  "type": "text",
+                  "text": "link to the docs"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "sourceSlide": 4,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji \uD83D\uDE80✅."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "sourceSlide": 4,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Special characters: <tag> & \"quotes\" | pipes * stars _ underscores [brackets] #hash"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "sourceSlide": 4,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "Simplicity is prerequisite for reliability.",
+              "style": [
+                "Italic"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "sourceSlide": 4,
+          "resourceId": "img1",
+          "altText": "Reference image"
+        },
+        {
+          "type": "paragraph",
+          "sourceSlide": 4,
+          "inlines": [
+            {
+              "type": "text",
+              "text": "End of reference document."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "img1",
+      "mediaType": "image/png",
+      "fileName": "image.png",
+      "pixelWidth": 16,
+      "pixelHeight": 16,
+      "size": 80,
+      "data": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAF0lEQVR4nGOQ9+shCTGMahgNpZ5hmzQA9FT5AfAHft4AAAAASUVORK5CYII="
+    }
+  ]
+}

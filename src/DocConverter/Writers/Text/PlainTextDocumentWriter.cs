@@ -97,7 +97,7 @@ namespace DocConverter.Writers.Text
                     return "";
                 case SectionBlock section:
                     List<string> sectionParts = new List<string>();
-                    if (!string.IsNullOrEmpty(section.Title)) sectionParts.Add(Heading(section.Title!, Math.Min(6, 2 + sectionDepth), o.HeadingStyle));
+                    if (SectionTitles.ShouldRender(section)) sectionParts.Add(Heading(section.Title!, Math.Min(6, 2 + sectionDepth), o.HeadingStyle));
                     foreach (Block child in section.Blocks)
                     {
                         string rendered = RenderBlock(child, state, sectionDepth + 1);

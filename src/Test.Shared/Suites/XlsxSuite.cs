@@ -229,10 +229,10 @@ namespace Test.Shared.Suites
                 TestSupport.AssertEqual(ReferenceContent.Title, snapshot.Title, "title");
             }));
 
-            cases.Add(Case("WriteWarnings", "Writing the reference raises ImagesOmitted and FormattingLost", async ct =>
+            cases.Add(Case("WriteWarnings", "Writing the reference raises ImagePlaceholderEmitted (image block as a placeholder row) and FormattingLost", async ct =>
             {
                 BytesConversionResult result = await Write(ReferenceContent.ToModel(), null, ct).ConfigureAwait(false);
-                TestSupport.Assert(result.Warnings.Any(w => w.Code == WarningCodeEnum.ImagesOmitted), "ImagesOmitted");
+                TestSupport.Assert(result.Warnings.Any(w => w.Code == WarningCodeEnum.ImagePlaceholderEmitted), "ImagePlaceholderEmitted");
                 TestSupport.Assert(result.Warnings.Any(w => w.Code == WarningCodeEnum.FormattingLost), "FormattingLost");
             }));
 

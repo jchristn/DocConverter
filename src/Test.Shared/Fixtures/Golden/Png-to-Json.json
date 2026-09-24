@@ -1,0 +1,22 @@
+{
+  "docconverter": "1",
+  "metadata": {},
+  "blocks": [
+    {
+      "type": "image",
+      "resourceId": "img1",
+      "altText": "Image"
+    }
+  ],
+  "resources": [
+    {
+      "id": "img1",
+      "mediaType": "image/png",
+      "fileName": "image.png",
+      "pixelWidth": 96,
+      "pixelHeight": 64,
+      "size": 497,
+      "data": "iVBORw0KGgoAAAANSUhEUgAAAGAAAABACAYAAADlNHIOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGGSURBVHhe7dGxbQNBEENRVefC3Is6cH8yNjjA+NAGNo5DLszgJQp0w/2Pj8+vV/k8+EPNagCzBjBrALMGMGsAswYwawCzBjBrALPYAK/n48/4X8miAvAh78BvpIkIwEdT4XcTWAPwgSbwBjdLAD6KA29yGQ/Ah3DibQ6jAfgACXjjtLEAHJ6Et04aCcDBiXjzFHkADk3G2ydIA3DgCbhBrQGAG9RkATjsJNyi1ABvcIuSJAAHnYibVBpgg5tUGmCDm1QaYIObVBpgg5tUbg/AIafiLpXbAywccyJuUmmADW5SaYANblJpgA1uUmmADW5SkQRYOOgk3KLUAG9wi5IswMJhJ+AGtQYAblCTBlg4MBlvnyAPsHBoIt48ZSTAwsFJeOuksQALhyfgjdNGAyx8ACfe5jAeYOFDOPAmF0uACx9lAm9wswa48JFU+N0EEQEufLA78BtpogL8xIf8Df5XstgA/0UDmDWAWQOYNYBZA5g1gFkDmDWAWQOYNYBZA5g1gFkDmH0DWUZ9FXNTOCgAAAAASUVORK5CYII="
+    }
+  ]
+}

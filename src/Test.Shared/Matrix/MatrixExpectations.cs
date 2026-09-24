@@ -37,11 +37,12 @@ namespace Test.Shared.Matrix
                     TestSupport.Assert(snap.ContainsText(snippet), pair + ": missing text '" + snippet + "' in: " + TestSupport.Truncate(snap.AllText, 300));
             }
 
-            // Tables.
+            // Tables. CSV and TSV keep only the first table by default.
             if (source.TableRows.Count > 0)
             {
                 bool structuredRows = target != DocumentFormatEnum.Text && target != DocumentFormatEnum.Pdf;
-                foreach (string[] row in source.TableRows)
+                System.Collections.Generic.List<string[]> expectedRows = tablesOnly && source.FirstTableRows.Count > 0 ? source.FirstTableRows : source.TableRows;
+                foreach (string[] row in expectedRows)
                 {
                     if (structuredRows)
                         TestSupport.Assert(snap.HasTableRow(row), pair + ": missing table row [" + string.Join(" | ", row) + "]; rows seen: " + Rows(snap));

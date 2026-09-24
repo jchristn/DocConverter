@@ -141,7 +141,7 @@ namespace DocConverter.Writers.Html
                     break;
                 case SectionBlock section:
                     sb.Append("<section data-kind=\"").Append(section.Kind.ToString().ToLowerInvariant()).Append('"').Append(IdAttr(section)).Append(">\n");
-                    if (!string.IsNullOrEmpty(section.Title))
+                    if (SectionTitles.ShouldRender(section))
                     {
                         int level = Math.Min(6, 2 + sectionDepth);
                         sb.Append("<h").Append(level).Append('>').Append(Text(section.Title!)).Append("</h").Append(level).Append(">\n");

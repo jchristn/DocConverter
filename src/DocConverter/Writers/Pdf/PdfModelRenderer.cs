@@ -270,7 +270,7 @@ namespace DocConverter.Writers.Pdf
         {
             bool paged = section.Kind == SectionKindEnum.Page || section.Kind == SectionKindEnum.Slide;
             if (paged && topLevel && _AnyContent) target.AddPageBreak();
-            if (!string.IsNullOrEmpty(section.Title))
+            if (SectionTitles.ShouldRender(section))
             {
                 Paragraph title = target.AddParagraph();
                 title.Style = "Heading2";

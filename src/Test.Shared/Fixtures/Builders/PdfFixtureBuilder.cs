@@ -35,6 +35,8 @@ namespace Test.Shared.Fixtures.Builders
                 document.Info.Title = ReferenceContent.Title;
                 document.Info.Author = ReferenceContent.Author;
                 document.Info.Subject = ReferenceContent.Subject;
+                document.Info.CreationDate = new System.DateTime(2000, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+                document.Info.ModificationDate = new System.DateTime(2000, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 
                 PdfPage page = document.AddPage();
                 page.Width = XUnit.FromPoint(612);

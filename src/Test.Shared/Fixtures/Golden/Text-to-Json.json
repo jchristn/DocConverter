@@ -1,0 +1,194 @@
+{
+  "docconverter": "1",
+  "metadata": {},
+  "blocks": [
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Reference Document"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "This paragraph has bold text, italic text, underlined text, struck text, inline code and a link to the docs (https://example.com/docs)."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Lists"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "- First bullet"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "- Second bullet"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "  - Nested bullet A"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "    - Deep bullet"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "- Third bullet"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "1. Step one"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "2. Step two"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "3. Step three"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Table"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Name          Role           Years"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "Ada Lovelace  Engineer       7"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "Grace Hopper  Admiral        40"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "Alan Turing   Mathematician  12"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Code"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "int total = 40 + 2;"
+        },
+        {
+          "type": "lineBreak"
+        },
+        {
+          "type": "text",
+          "text": "Console.WriteLine(total);"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Simplicity is prerequisite for reliability."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji \uD83D\uDE80✅."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "Special characters: <tag> & \"quotes\" | pipes * stars _ underscores [brackets] #hash"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "inlines": [
+        {
+          "type": "text",
+          "text": "End of reference document."
+        }
+      ]
+    }
+  ],
+  "resources": []
+}

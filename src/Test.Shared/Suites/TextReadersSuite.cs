@@ -275,7 +275,8 @@ namespace Test.Shared.Suites
         /// </summary>
         /// <param name="m">Model.</param>
         /// <param name="expectUnderline">True when the source can express underline.</param>
-        public static void AssertRichReference(DocumentModel m, bool expectUnderline)
+        /// <param name="expectCodeLanguage">True when the source keeps the code block language (DOCX does not).</param>
+        public static void AssertRichReference(DocumentModel m, bool expectUnderline, bool expectCodeLanguage = true)
         {
             ContentSnapshot snap = ModelInspector.Inspect(m);
             foreach (string snippet in ReferenceContent.CoreTextSnippets) TestSupport.Assert(snap.ContainsText(snippet), "text contains '" + snippet + "'");
@@ -301,7 +302,7 @@ namespace Test.Shared.Suites
 
             CodeBlock code = ModelInspector.AllBlocks(m.Blocks).OfType<CodeBlock>().Single();
             TestSupport.AssertEqual(ReferenceContent.CodeText, code.Text.TrimEnd('\n'), "code text");
-            TestSupport.AssertEqual(ReferenceContent.CodeLanguage, code.Language, "code language");
+            if (expectCodeLanguage) TestSupport.AssertEqual(ReferenceContent.CodeLanguage, code.Language, "code language");
             QuoteBlock quote = ModelInspector.AllBlocks(m.Blocks).OfType<QuoteBlock>().Single();
             TestSupport.AssertContains(ModelInspector.Inspect(new DocumentModel { Blocks = quote.Blocks }).AllText, ReferenceContent.QuoteText, "quote text");
 

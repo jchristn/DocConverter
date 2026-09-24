@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<docconverter version="1">
+  <metadata />
+  <blocks>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Reference Document</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">This paragraph has bold text, italic text, underlined text, struck text, inline code and a link to the docs (https://example.com/docs).</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Lists</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">- First bullet</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">- Second bullet</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">  - Nested bullet A</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">    - Deep bullet</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">- Third bullet</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">1. Step one</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">2. Step two</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">3. Step three</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Table</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Name          Role           Years</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">Ada Lovelace  Engineer       7</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">Grace Hopper  Admiral        40</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">Alan Turing   Mathematician  12</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Code</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">int total = 40 + 2;</inline>
+        <inline type="lineBreak" />
+        <inline type="text" xml:space="preserve">Console.WriteLine(total);</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Simplicity is prerequisite for reliability.</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Special characters: &lt;tag&gt; &amp; "quotes" | pipes * stars _ underscores [brackets] #hash</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">End of reference document.</inline>
+      </inlines>
+    </block>
+  </blocks>
+  <resources />
+</docconverter>

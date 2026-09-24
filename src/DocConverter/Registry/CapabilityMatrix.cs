@@ -25,11 +25,11 @@ namespace DocConverter.Registry
             DocumentFormatEnum.Xlsx, DocumentFormatEnum.Pptx, DocumentFormatEnum.Pdf
         };
 
-        private const string TablesOnly = "Tables only. Without tables, one row per block (NonTableContentDropped, TablesFlattened).";
-        private const string XlsxProjection = "Tables become sheets; other blocks become rows on a Document sheet; images omitted.";
-        private const string PptxProjection = "Content is split across slides; long tables continue on extra slides.";
-        private const string ImageNoOcr = "No OCR: a placeholder names the image (ImagePlaceholderEmitted).";
-        private const string ImageNotInPdf = "PDFsharp cannot embed this image format: a placeholder is written (ImageFormatUnsupported).";
+        private const string _TablesOnly = "Tables only. Without tables, one row per block (NonTableContentDropped, FormattingLost).";
+        private const string _XlsxProjection = "Tables become sheets; other blocks and image placeholders become rows on a Document sheet (FormattingLost, ImagePlaceholderEmitted).";
+        private const string _PptxProjection = "Content is split across slides; long tables continue on extra slides.";
+        private const string _ImageNoOcr = "No OCR: a placeholder names the image (ImagePlaceholderEmitted).";
+        private const string _ImageNotInPdf = "PDFsharp cannot embed this image format: a placeholder is written (ImageFormatUnsupported).";
 
         internal static bool TryGet(DocumentFormatEnum from, DocumentFormatEnum to, out FidelityEnum fidelity, out string notes)
         {
@@ -46,13 +46,13 @@ namespace DocConverter.Registry
                     case DocumentFormatEnum.Tsv:
                     case DocumentFormatEnum.Xlsx:
                         fidelity = FidelityEnum.Projection;
-                        notes = ImageNoOcr;
+                        notes = _ImageNoOcr;
                         return true;
                     case DocumentFormatEnum.Pdf:
                         if (from == DocumentFormatEnum.Gif || from == DocumentFormatEnum.Tiff || from == DocumentFormatEnum.WebP)
                         {
                             fidelity = FidelityEnum.Projection;
-                            notes = ImageNotInPdf;
+                            notes = _ImageNotInPdf;
                         }
                         else if (from == DocumentFormatEnum.Jpeg)
                         {
@@ -75,7 +75,7 @@ namespace DocConverter.Registry
             {
                 if (from == DocumentFormatEnum.Csv || from == DocumentFormatEnum.Tsv) return true;
                 fidelity = FidelityEnum.Projection;
-                notes = TablesOnly;
+                notes = _TablesOnly;
                 return true;
             }
 
@@ -83,7 +83,7 @@ namespace DocConverter.Registry
             {
                 if (from == DocumentFormatEnum.Csv || from == DocumentFormatEnum.Tsv || from == DocumentFormatEnum.Xlsx) return true;
                 fidelity = FidelityEnum.Projection;
-                notes = XlsxProjection;
+                notes = _XlsxProjection;
                 return true;
             }
 
@@ -91,7 +91,7 @@ namespace DocConverter.Registry
             {
                 if (from == DocumentFormatEnum.Text || from == DocumentFormatEnum.Pptx) return true;
                 fidelity = FidelityEnum.Projection;
-                notes = PptxProjection;
+                notes = _PptxProjection;
                 return true;
             }
 

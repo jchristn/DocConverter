@@ -1,0 +1,19 @@
+Staff
+-----
+
+Name          Role           Years
+------------  -------------  -----
+Ada Lovelace  Engineer       7
+Grace Hopper  Admiral        40
+Alan Turing   Mathematician  12
+
+Notes
+-----
+
+Label          Value
+-------------  -----------------------------------------------------------------------------------
+International  Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.
+Special        Special characters: <tag> & "quotes" | pipes * stars _ underscores [brackets] #hash
+Hired          2023-02-15
+Total          59
+Active         TRUE

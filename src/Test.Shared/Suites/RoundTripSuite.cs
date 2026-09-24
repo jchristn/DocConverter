@@ -33,15 +33,21 @@ namespace Test.Shared.Suites
             foreach (SourceSpec source in MatrixCatalog.Sources)
             {
                 SourceSpec src = source;
-                s.Add("ViaJson_" + src.Id, src.Id + " read directly equals " + src.Id + " written to canonical JSON and read back", async ct =>
+                s.Add("ViaJson_" + src.Id, src.Id + ": the canonical mapping is lossless and JSON and XML round trips are idempotent", async ct =>
                 {
                     DocumentModel direct = await c.ReadAsync(src.Bytes(), src.Format, null, ct).ConfigureAwait(false);
-                    byte[] json = (await c.WriteToBytesAsync(direct, DocumentFormatEnum.Json, null, ct).ConfigureAwait(false)).Output;
-                    DocumentModel back = await c.ReadAsync(json, DocumentFormatEnum.Json, null, ct).ConfigureAwait(false);
-                    ModelComparer.AssertEqual(direct, back, "json round trip of " + src.Id);
-                    byte[] xml = (await c.WriteToBytesAsync(direct, DocumentFormatEnum.Xml, null, ct).ConfigureAwait(false)).Output;
-                    DocumentModel backXml = await c.ReadAsync(xml, DocumentFormatEnum.Xml, null, ct).ConfigureAwait(false);
-                    ModelComparer.AssertEqual(direct, backXml, "xml round trip of " + src.Id);
+                    ModelComparer.AssertEqual(direct, DocConverter.Model.Serialization.CanonicalMapper.FromDto(DocConverter.Model.Serialization.CanonicalMapper.ToDto(direct)), "canonical mapping of " + src.Id);
+
+                    // Writing applies the documented model normalization once; after that, round trips change nothing.
+                    foreach (DocumentFormatEnum canonical in new[] { DocumentFormatEnum.Json, DocumentFormatEnum.Xml })
+                    {
+                        byte[] first = (await c.WriteToBytesAsync(direct, canonical, null, ct).ConfigureAwait(false)).Output;
+                        DocumentModel once = await c.ReadAsync(first, canonical, null, ct).ConfigureAwait(false);
+                        byte[] second = (await c.WriteToBytesAsync(once, canonical, null, ct).ConfigureAwait(false)).Output;
+                        DocumentModel twice = await c.ReadAsync(second, canonical, null, ct).ConfigureAwait(false);
+                        ModelComparer.AssertEqual(once, twice, canonical + " round trip of " + src.Id + " is idempotent");
+                        TestSupport.Assert(first.SequenceEqual(second), canonical + " output of " + src.Id + " is stable across round trips");
+                    }
                 });
 
                 s.Add("InputShapes_" + src.Id, src.Id + ": byte array, string, seekable stream at an offset, non-seekable and 1-byte-per-read streams give identical output", async ct =>
@@ -97,7 +103,7 @@ namespace Test.Shared.Suites
                 {
                     byte[] bytes = (await c.WriteToBytesAsync(ReferenceContent.ToModel(), format, null, ct).ConfigureAwait(false)).Output;
                     DocumentModel back = await c.ReadAsync(bytes, format, null, ct).ConfigureAwait(false);
-                    TextReadersSuite.AssertRichReference(back, format != DocumentFormatEnum.Markdown);
+                    TextReadersSuite.AssertRichReference(back, format != DocumentFormatEnum.Markdown, format != DocumentFormatEnum.Docx);
                 });
             }
 
@@ -106,7 +112,7 @@ namespace Test.Shared.Suites
                 byte[] docx = (await c.ConvertToBytesAsync(TextFixtures.Reference(DocumentFormatEnum.Markdown), DocumentFormatEnum.Markdown, DocumentFormatEnum.Docx, null, ct).ConfigureAwait(false)).Output;
                 byte[] md = (await c.ConvertToBytesAsync(docx, DocumentFormatEnum.Docx, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false)).Output;
                 DocumentModel back = await c.ReadAsync(md, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false);
-                TextReadersSuite.AssertRichReference(back, false);
+                TextReadersSuite.AssertRichReference(back, false, false);
             });
 
             s.Add("HtmlDocxHtml", "HTML to DOCX to HTML keeps the reference structure", async ct =>
@@ -114,7 +120,7 @@ namespace Test.Shared.Suites
                 byte[] docx = (await c.ConvertToBytesAsync(TextFixtures.Reference(DocumentFormatEnum.Html), DocumentFormatEnum.Html, DocumentFormatEnum.Docx, null, ct).ConfigureAwait(false)).Output;
                 byte[] html = (await c.ConvertToBytesAsync(docx, DocumentFormatEnum.Docx, DocumentFormatEnum.Html, null, ct).ConfigureAwait(false)).Output;
                 DocumentModel back = await c.ReadAsync(html, DocumentFormatEnum.Html, null, ct).ConfigureAwait(false);
-                TextReadersSuite.AssertRichReference(back, true);
+                TextReadersSuite.AssertRichReference(back, true, false);
             });
 
             s.Add("CsvXlsxCsv", "CSV to XLSX to CSV is exact", async ct =>

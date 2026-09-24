@@ -34,6 +34,12 @@ namespace Test.Shared.Matrix
         public List<string[]> TableRows { get; } = new List<string[]>();
 
         /// <summary>
+        /// Rows of the source's first table, which is what CSV and TSV keep with the default TableSelection. Empty means
+        /// the same as TableRows.
+        /// </summary>
+        public List<string[]> FirstTableRows { get; } = new List<string[]>();
+
+        /// <summary>
         /// Headings the source declares.
         /// </summary>
         public List<string> Headings { get; } = new List<string>();

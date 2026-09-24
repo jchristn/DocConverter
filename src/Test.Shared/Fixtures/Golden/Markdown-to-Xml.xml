@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<docconverter version="1">
+  <metadata>
+    <title>DocConverter Reference Document</title>
+    <subject>Reference content</subject>
+    <author>DocConverter Tests</author>
+  </metadata>
+  <blocks>
+    <block type="heading" level="1">
+      <inlines>
+        <inline type="text" xml:space="preserve">Reference Document</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">This paragraph has </inline>
+        <inline type="text" style="Bold" xml:space="preserve">bold text</inline>
+        <inline type="text" xml:space="preserve">, </inline>
+        <inline type="text" style="Italic" xml:space="preserve">italic text</inline>
+        <inline type="text" xml:space="preserve">, </inline>
+        <inline type="text" style="Underline" xml:space="preserve">underlined text</inline>
+        <inline type="text" xml:space="preserve">, </inline>
+        <inline type="text" style="Strikethrough" xml:space="preserve">struck text</inline>
+        <inline type="text" xml:space="preserve">, </inline>
+        <inline type="text" style="Code" xml:space="preserve">inline code</inline>
+        <inline type="text" xml:space="preserve"> and a </inline>
+        <inline type="link" url="https://example.com/docs">
+          <inlines>
+            <inline type="text" xml:space="preserve">link to the docs</inline>
+          </inlines>
+        </inline>
+        <inline type="text" xml:space="preserve">.</inline>
+      </inlines>
+    </block>
+    <block type="heading" level="2">
+      <inlines>
+        <inline type="text" xml:space="preserve">Lists</inline>
+      </inlines>
+    </block>
+    <block type="list" kind="Unordered">
+      <items>
+        <item>
+          <blocks>
+            <block type="paragraph">
+              <inlines>
+                <inline type="text" xml:space="preserve">First bullet</inline>
+              </inlines>
+            </block>
+          </blocks>
+        </item>
+        <item>
+          <blocks>
+            <block type="paragraph">
+              <inlines>
+                <inline type="text" xml:space="preserve">Second bullet</inline>
+              </inlines>
+            </block>
+            <block type="list" kind="Unordered">
+              <items>
+                <item>
+                  <blocks>
+                    <block type="paragraph">
+                      <inlines>
+                        <inline type="text" xml:space="preserve">Nested bullet A</inline>
+                      </inlines>
+                    </block>
+                    <block type="list" kind="Unordered">
+                      <items>
+                        <item>
+                          <blocks>
+                            <block type="paragraph">
+                              <inlines>
+                                <inline type="text" xml:space="preserve">Deep bullet</inline>
+                              </inlines>
+                            </block>
+                          </blocks>
+                        </item>
+                      </items>
+                    </block>
+                  </blocks>
+                </item>
+              </items>
+            </block>
+          </blocks>
+        </item>
+        <item>
+          <blocks>
+            <block type="paragraph">
+              <inlines>
+                <inline type="text" xml:space="preserve">Third bullet</inline>
+              </inlines>
+            </block>
+          </blocks>
+        </item>
+      </items>
+    </block>
+    <block type="list" kind="Ordered" start="1">
+      <items>
+        <item>
+          <blocks>
+            <block type="paragraph">
+              <inlines>
+                <inline type="text" xml:space="preserve">Step one</inline>
+              </inlines>
+            </block>
+          </blocks>
+        </item>
+        <item>
+          <blocks>
+            <block type="paragraph">
+              <inlines>
+                <inline type="text" xml:space="preserve">Step two</inline>
+              </inlines>
+            </block>
+          </blocks>
+        </item>
+        <item>
+          <blocks>
+            <block type="paragraph">
+              <inlines>
+                <inline type="text" xml:space="preserve">Step three</inline>
+              </inlines>
+            </block>
+          </blocks>
+        </item>
+      </items>
+    </block>
+    <block type="heading" level="2">
+      <inlines>
+        <inline type="text" xml:space="preserve">Table</inline>
+      </inlines>
+    </block>
+    <block type="table" headerRowCount="1" columnAlignments="Default,Default,Right">
+      <rows>
+        <row>
+          <cell header="true">
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Name</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell header="true">
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Role</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell header="true">
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Years</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Ada Lovelace</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Engineer</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">7</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Grace Hopper</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Admiral</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">40</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Alan Turing</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Mathematician</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">12</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+      </rows>
+    </block>
+    <block type="heading" level="3">
+      <inlines>
+        <inline type="text" xml:space="preserve">Code</inline>
+      </inlines>
+    </block>
+    <block type="code" language="csharp">
+      <text>int total = 40 + 2;
+Console.WriteLine(total);</text>
+    </block>
+    <block type="quote">
+      <blocks>
+        <block type="paragraph">
+          <inlines>
+            <inline type="text" xml:space="preserve">Simplicity is prerequisite for reliability.</inline>
+          </inlines>
+        </block>
+      </blocks>
+    </block>
+    <block type="image" resourceId="img1" altText="Reference image" />
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">Special characters: &lt;tag&gt; &amp; "quotes" | pipes * stars _ underscores [brackets] #hash</inline>
+      </inlines>
+    </block>
+    <block type="paragraph">
+      <inlines>
+        <inline type="text" xml:space="preserve">End of reference document.</inline>
+      </inlines>
+    </block>
+  </blocks>
+  <resources>
+    <resource id="img1" mediaType="image/png" fileName="image.png" pixelWidth="16" pixelHeight="16" size="80">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAF0lEQVR4nGOQ9+shCTGMahgNpZ5hmzQA9FT5AfAHft4AAAAASUVORK5CYII=</resource>
+  </resources>
+</docconverter>

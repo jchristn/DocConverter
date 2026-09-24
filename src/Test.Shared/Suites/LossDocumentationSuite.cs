@@ -89,13 +89,14 @@ namespace Test.Shared.Suites
                 TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.ImagePlaceholderEmitted), "ImagePlaceholderEmitted");
             });
 
-            s.Add("DocumentToXlsx", "A non-tabular document to XLSX puts tables on sheets, other blocks on a Document sheet, and omits images", async ct =>
+            s.Add("DocumentToXlsx", "A non-tabular document to XLSX puts tables on sheets, other blocks and image placeholders on a Document sheet", async ct =>
             {
                 BytesConversionResult r = await c.WriteToBytesAsync(ReferenceContent.ToModel(), DocumentFormatEnum.Xlsx, null, ct).ConfigureAwait(false);
                 ContentSnapshot snap = XlsxInspector.Inspect(r.Output);
                 TestSupport.Assert(snap.ContainsText(ReferenceContent.Closing), "non-table content on the Document sheet");
                 foreach (string[] row in ReferenceContent.TableRows) TestSupport.Assert(snap.HasTableRow(row), "table row");
-                TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.ImagesOmitted), "ImagesOmitted");
+                TestSupport.Assert(snap.ContainsText("[Image: Reference image, PNG 16x16]"), "image placeholder row");
+                TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.ImagePlaceholderEmitted), "ImagePlaceholderEmitted");
                 TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.FormattingLost), "FormattingLost");
             });
 

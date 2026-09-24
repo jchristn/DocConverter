@@ -13,6 +13,7 @@ namespace DocConverter.Internal
     {
         internal static void Apply(DocumentModel document, ConversionOptions options, ConversionContext context)
         {
+            ClearRedundantBold(document.Blocks);
             if (!options.IncludeMetadata) document.Metadata = new DocumentMetadata();
             if (options.Title != null) document.Metadata.Title = options.Title;
 
@@ -23,6 +24,66 @@ namespace DocConverter.Internal
                     context.AddWarning(WarningCodeEnum.ImagesOmitted, removed + " image(s) were omitted because IncludeImages is false.");
                 document.Resources.Clear();
             }
+        }
+
+        // Headings and header cells are bold by nature. Readers of visual formats (PDF, RTF, DOCX) report the bold font
+        // faithfully, which would make writers emit "# **Title**". When every run of a heading or header cell is bold,
+        // the Bold flag is cleared.
+        private static void ClearRedundantBold(List<Block> blocks)
+        {
+            foreach (Block block in blocks)
+            {
+                switch (block)
+                {
+                    case HeadingBlock heading:
+                        ClearIfAllBold(heading.Inlines);
+                        break;
+                    case SectionBlock section:
+                        ClearRedundantBold(section.Blocks);
+                        break;
+                    case QuoteBlock quote:
+                        ClearRedundantBold(quote.Blocks);
+                        break;
+                    case ListBlock list:
+                        foreach (ListItemBlock item in list.Items) ClearRedundantBold(item.Blocks);
+                        break;
+                    case TableBlock table:
+                        for (int r = 0; r < table.Rows.Count; r++)
+                        {
+                            foreach (TableCell cell in table.Rows[r].Cells)
+                            {
+                                if (cell.IsHeader || r < table.HeaderRowCount)
+                                    foreach (Block b in cell.Blocks)
+                                        if (b is ParagraphBlock p) ClearIfAllBold(p.Inlines);
+                                ClearRedundantBold(cell.Blocks);
+                            }
+                        }
+
+                        break;
+                }
+            }
+        }
+
+        private static void ClearIfAllBold(List<Inline> inlines)
+        {
+            bool any = false;
+            foreach (Inline inline in inlines)
+            {
+                if (inline is TextInline t)
+                {
+                    if (t.Text.Trim().Length == 0) continue;
+                    if ((t.Style & InlineStyleEnum.Bold) != InlineStyleEnum.Bold) return;
+                    any = true;
+                }
+                else if (inline is LinkInline)
+                {
+                    return;
+                }
+            }
+
+            if (!any) return;
+            foreach (Inline inline in inlines)
+                if (inline is TextInline t) t.Style &= ~InlineStyleEnum.Bold;
         }
 
         private static int RemoveImages(List<Block> blocks)

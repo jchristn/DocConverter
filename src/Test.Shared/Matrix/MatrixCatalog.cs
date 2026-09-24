@@ -69,6 +69,7 @@ namespace Test.Shared.Matrix
                 SourceSpec generic = new SourceSpec(format + "Generic", format, () => TextFixtures.Reference(format));
                 generic.Snippets.AddRange(new[] { ReferenceContent.Title, "Grace Hopper", "Step two", ReferenceContent.QuoteText, ReferenceContent.InternationalLatin, ReferenceContent.Closing });
                 generic.TableRows.AddRange(ReferenceContent.TableRows);
+                generic.FirstTableRows.Add(new[] { format == DocumentFormatEnum.Json ? "title" : "@title", ReferenceContent.Title });
                 list.Add(generic);
             }
 

@@ -56,6 +56,7 @@ namespace DocConverter.Writers.Xlsx
             token.ThrowIfCancellationRequested();
 
             CollectState state = new CollectState();
+            state.Resources = document.Resources;
             List<XlsxSheetPlan> tables = new List<XlsxSheetPlan>();
             XlsxSheetPlan documentSheet = new XlsxSheetPlan("Document", null);
             Collect(document.Blocks, null, tables, documentSheet.Lines, state, 0);
@@ -69,7 +70,9 @@ namespace DocConverter.Writers.Xlsx
 
             plans.AddRange(tables);
             if (state.Images > 0)
-                context.AddWarning(WarningCodeEnum.ImagesOmitted, state.Images + " image(s) were omitted because XLSX output does not carry images.");
+                context.AddWarning(WarningCodeEnum.ImagesOmitted, state.Images + " inline or in-table image(s) were omitted because XLSX output does not carry images.");
+            if (state.Placeholders > 0 && options.Xlsx.IncludeNonTableContent)
+                context.AddWarning(WarningCodeEnum.ImagePlaceholderEmitted, state.Placeholders + " image(s) were written as placeholder rows because XLSX output does not carry images. No text was extracted from them (no OCR).");
             if (state.FormattingLost && (options.Xlsx.IncludeNonTableContent || tables.Count > 0))
                 context.AddWarning(WarningCodeEnum.FormattingLost, "Inline styles and links were flattened to plain cell text.");
             if (plans.Count == 0) plans.Add(new XlsxSheetPlan("Sheet1", null));
@@ -135,7 +138,7 @@ namespace DocConverter.Writers.Xlsx
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(section.Title)) lines.Add(section.Title!);
+                            if (SectionTitles.ShouldRender(section)) lines.Add(section.Title!);
                             Collect(section.Blocks, sheetTitle, tables, lines, state, depth);
                         }
 
@@ -193,8 +196,9 @@ namespace DocConverter.Writers.Xlsx
                     case CodeBlock code:
                         lines.Add(code.Text);
                         break;
-                    case ImageBlock _:
-                        state.Images++;
+                    case ImageBlock image:
+                        lines.Add(ImagePlaceholder.Describe(image.AltText, image.ResourceId, state.Resources));
+                        state.Placeholders++;
                         break;
                 }
             }

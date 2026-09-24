@@ -2,6 +2,7 @@ namespace DocConverter.Writers.Docx
 {
     using System.Collections.Generic;
     using DocConverter.Enums;
+    using DocConverter.Internal;
     using DocConverter.Model;
     using DocumentFormat.OpenXml;
     using W = DocumentFormat.OpenXml.Wordprocessing;
@@ -87,7 +88,7 @@ namespace DocConverter.Writers.Docx
                 _WrotePageSection = true;
             }
 
-            if (!string.IsNullOrEmpty(section.Title))
+            if (SectionTitles.ShouldRender(section))
                 parent.Append(Paragraph(new List<Inline> { new TextInline(section.Title) }, "Heading2", TextAlignmentEnum.Default));
             foreach (Block child in section.Blocks) WriteBlock(child, parent, null);
         }

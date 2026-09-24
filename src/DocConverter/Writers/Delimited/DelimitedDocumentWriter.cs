@@ -147,7 +147,7 @@ namespace DocConverter.Writers.Delimited
                 switch (block)
                 {
                     case SectionBlock section:
-                        if (!string.IsNullOrEmpty(section.Title)) records.Add(new List<string> { section.Title! });
+                        if (SectionTitles.ShouldRender(section)) records.Add(new List<string> { section.Title! });
                         RowsFromBlocks(section.Blocks, records, document, context);
                         break;
                     case QuoteBlock quote:

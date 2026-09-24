@@ -83,7 +83,7 @@ namespace DocConverter.Writers.Pptx
                 case ThematicBreakBlock _:
                     break;
                 case SectionBlock section:
-                    if (!string.IsNullOrEmpty(section.Title)) AddText(new HeadingBlock(3, section.Title));
+                    if (SectionTitles.ShouldRender(section)) AddText(new HeadingBlock(3, section.Title));
                     foreach (Block child in section.Blocks) Add(child);
                     break;
                 default:

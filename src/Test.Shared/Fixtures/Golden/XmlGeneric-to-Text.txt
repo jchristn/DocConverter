@@ -1,0 +1,32 @@
+reference
+---------
+
+Key      Value
+-------  -------------------------------
+@title   DocConverter Reference Document
+heading  Reference Document
+
+staff
+
+Name          Role           Years
+------------  -------------  -----
+Ada Lovelace  Engineer       7
+Grace Hopper  Admiral        40
+Alan Turing   Mathematician  12
+
+steps
+
+step
+
+- Step one
+- Step two
+- Step three
+
+notes
+
+Key            Value
+-------------  -----------------------------------------------------------------------------------
+quote          Simplicity is prerequisite for reliability.
+international  Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.
+special        Special characters: <tag> & "quotes" | pipes * stars _ underscores [brackets] #hash
+closing        End of reference document.

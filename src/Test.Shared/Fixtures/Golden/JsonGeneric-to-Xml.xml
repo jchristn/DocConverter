@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<docconverter version="1">
+  <metadata />
+  <blocks>
+    <block type="table" headerRowCount="1">
+      <rows>
+        <row>
+          <cell header="true">
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Key</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell header="true">
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Value</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">title</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">DocConverter Reference Document</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">heading</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+          <cell>
+            <blocks>
+              <block type="paragraph">
+                <inlines>
+                  <inline type="text" xml:space="preserve">Reference Document</inline>
+                </inlines>
+              </block>
+            </blocks>
+          </cell>
+        </row>
+      </rows>
+    </block>
+    <block type="section" kind="Generic" title="staff">
+      <blocks>
+        <block type="table" headerRowCount="1">
+          <rows>
+            <row>
+              <cell header="true">
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Name</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell header="true">
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Role</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell header="true">
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Years</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Ada Lovelace</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Engineer</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">7</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Grace Hopper</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Admiral</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">40</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Alan Turing</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Mathematician</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">12</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+          </rows>
+        </block>
+      </blocks>
+    </block>
+    <block type="section" kind="Generic" title="steps">
+      <blocks>
+        <block type="list" kind="Unordered">
+          <items>
+            <item>
+              <blocks>
+                <block type="paragraph">
+                  <inlines>
+                    <inline type="text" xml:space="preserve">Step one</inline>
+                  </inlines>
+                </block>
+              </blocks>
+            </item>
+            <item>
+              <blocks>
+                <block type="paragraph">
+                  <inlines>
+                    <inline type="text" xml:space="preserve">Step two</inline>
+                  </inlines>
+                </block>
+              </blocks>
+            </item>
+            <item>
+              <blocks>
+                <block type="paragraph">
+                  <inlines>
+                    <inline type="text" xml:space="preserve">Step three</inline>
+                  </inlines>
+                </block>
+              </blocks>
+            </item>
+          </items>
+        </block>
+      </blocks>
+    </block>
+    <block type="section" kind="Generic" title="notes">
+      <blocks>
+        <block type="table" headerRowCount="1">
+          <rows>
+            <row>
+              <cell header="true">
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Key</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell header="true">
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Value</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">quote</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Simplicity is prerequisite for reliability.</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">international</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">special</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">Special characters: &lt;tag&gt; &amp; "quotes" | pipes * stars _ underscores [brackets] #hash</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+            <row>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">closing</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+              <cell>
+                <blocks>
+                  <block type="paragraph">
+                    <inlines>
+                      <inline type="text" xml:space="preserve">End of reference document.</inline>
+                    </inlines>
+                  </block>
+                </blocks>
+              </cell>
+            </row>
+          </rows>
+        </block>
+      </blocks>
+    </block>
+  </blocks>
+  <resources />
+</docconverter>

@@ -101,6 +101,11 @@ namespace DocConverter.Detection
                         return Supported(DocumentFormatEnum.Html, "XHTML document", DetectionConfidenceEnum.Structure);
                     return Supported(DocumentFormatEnum.Xml, "XML document", DetectionConfidenceEnum.Structure);
                 }
+
+                // An XML declaration identifies XML even when the body cannot be parsed safely (for example a DOCTYPE
+                // declaring external entities). The reader then refuses it with a clear error.
+                if (trimmed.StartsWith("<?xml", StringComparison.OrdinalIgnoreCase))
+                    return Supported(DocumentFormatEnum.Xml, "XML document (not parsed during detection)", DetectionConfidenceEnum.Heuristic);
             }
 
             if (hint.HasValue)

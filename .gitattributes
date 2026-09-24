@@ -1,0 +1,5 @@
+# Normalize text files, but keep test fixtures and golden files byte-exact on every operating system.
+* text=auto
+*.sh text eol=lf
+*.bat text eol=crlf
+src/Test.Shared/Fixtures/** -text
