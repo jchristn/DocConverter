@@ -1,6 +1,7 @@
 namespace Test.Shared.Suites
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -118,10 +119,16 @@ namespace Test.Shared.Suites
 
             s.Add("RemoteResourcesNeverFetched", "Remote image URLs in Markdown and HTML are never requested (a local listener sees zero connections)", async ct =>
             {
+                // The URL path carries a token unique to this run, and only requests for it count. On shared CI runners
+                // (and under test runners that execute suites concurrently) unrelated loopback clients can open a
+                // connection to any listening port; counting raw connections made this test flaky.
+                string token = Guid.NewGuid().ToString("N");
                 TcpListener listener = new TcpListener(IPAddress.Loopback, 0);
                 listener.Start();
                 int port = ((IPEndPoint)listener.LocalEndpoint).Port;
-                int connections = 0;
+                int fetches = 0;
+                StringBuilder requests = new StringBuilder();
+                List<Task> handlers = new List<Task>();
                 using (CancellationTokenSource stop = new CancellationTokenSource())
                 {
                     Task accept = Task.Run(async () =>
@@ -133,8 +140,20 @@ namespace Test.Shared.Suites
                                 Task<TcpClient> pending = listener.AcceptTcpClientAsync();
                                 Task done = await Task.WhenAny(pending, Task.Delay(Timeout.Infinite, stop.Token)).ConfigureAwait(false);
                                 if (done != pending) break;
-                                Interlocked.Increment(ref connections);
-                                pending.Result.Dispose();
+                                TcpClient client = pending.Result;
+                                Task handler = Task.Run(async () =>
+                                {
+                                    using (client)
+                                    {
+                                        string request = await ReadRequestAsync(client).ConfigureAwait(false);
+                                        if (request.IndexOf(token, StringComparison.Ordinal) >= 0)
+                                        {
+                                            Interlocked.Increment(ref fetches);
+                                            lock (requests) requests.Append(request.Split('\n')[0].Trim()).Append("; ");
+                                        }
+                                    }
+                                });
+                                lock (handlers) handlers.Add(handler);
                             }
                         }
                         catch (Exception)
@@ -143,7 +162,7 @@ namespace Test.Shared.Suites
                         }
                     });
 
-                    string url = "http://127.0.0.1:" + port + "/image.png";
+                    string url = "http://127.0.0.1:" + port + "/" + token + "/image.png";
                     string md = "![remote](" + url + ")\n\n[link](" + url + ")";
                     string html = "<p><img src=\"" + url + "\"><link rel=\"stylesheet\" href=\"" + url + "\"></p>";
                     foreach (DocumentFormatEnum target in new[] { DocumentFormatEnum.Html, DocumentFormatEnum.Docx, DocumentFormatEnum.Pdf, DocumentFormatEnum.Pptx })
@@ -156,9 +175,12 @@ namespace Test.Shared.Suites
                     stop.Cancel();
                     listener.Stop();
                     await accept.ConfigureAwait(false);
+                    Task[] all;
+                    lock (handlers) all = handlers.ToArray();
+                    await Task.WhenAll(all).ConfigureAwait(false);
                 }
 
-                TestSupport.AssertEqual(0, connections, "connections to the remote URL");
+                TestSupport.AssertEqual(0, fetches, "requests for the remote URL (" + requests + ")");
             });
 
             s.Add("NoFileSystemWrites", "Conversions write nothing to the temp directory or the working directory", async ct =>
@@ -190,6 +212,24 @@ namespace Test.Shared.Suites
             });
 
             return s.Build();
+        }
+
+        private static async Task<string> ReadRequestAsync(TcpClient client)
+        {
+            try
+            {
+                using (NetworkStream stream = client.GetStream())
+                using (CancellationTokenSource timeout = new CancellationTokenSource(TimeSpan.FromSeconds(2)))
+                {
+                    byte[] buffer = new byte[4096];
+                    int read = await stream.ReadAsync(buffer, 0, buffer.Length, timeout.Token).ConfigureAwait(false);
+                    return read > 0 ? Encoding.ASCII.GetString(buffer, 0, read) : "";
+                }
+            }
+            catch (Exception)
+            {
+                return "";
+            }
         }
 
         private static string[] SafeList(string directory)
