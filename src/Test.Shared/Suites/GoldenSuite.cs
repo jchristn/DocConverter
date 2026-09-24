@@ -2,6 +2,7 @@ namespace Test.Shared.Suites
 {
     using System.Collections.Generic;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
     using DocConverter;
@@ -76,7 +77,18 @@ namespace Test.Shared.Suites
         {
             ConversionOptions options = new ConversionOptions { Deterministic = true };
             string output = (await c.ConvertToStringAsync(source.Bytes(), source.Format, target, options, token).ConfigureAwait(false)).Output;
-            return output.Replace("\r\n", "\n");
+            return NormalizeImages(output.Replace("\r\n", "\n"));
+        }
+
+        // Golden files pin text and structure. Image payloads are replaced because readers that re-encode images (PdfPig
+        // re-deflates PNG data) produce different bytes on .NET 8 and .NET 10; the matrix suite checks image presence.
+        private static string NormalizeImages(string text)
+        {
+            text = Regex.Replace(text, "base64,[A-Za-z0-9+/=]+", "base64,<image>");
+            text = Regex.Replace(text, "\"data\": \"[A-Za-z0-9+/=]+\"", "\"data\": \"<image>\"");
+            text = Regex.Replace(text, "\"size\": [0-9]+", "\"size\": <n>");
+            text = Regex.Replace(text, "size=\"[0-9]+\">[A-Za-z0-9+/=]+</resource>", "size=\"<n>\"><image></resource>");
+            return text;
         }
 
         private static string FileName(SourceSpec source, DocumentFormatEnum target)

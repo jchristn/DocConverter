@@ -4,7 +4,8 @@
     <title>DocConverter Reference Document</title>
     <subject>Reference content</subject>
     <author>DocConverter Tests</author>
-    <created>2026-09-24T17:21:51.0000000Z</created>
+    <created>2000-01-01T00:00:00.0000000Z</created>
+    <modified>2000-01-01T00:00:00.0000000Z</modified>
   </metadata>
   <blocks>
     <block type="heading" sourcePage="1" level="1">
@@ -284,6 +285,6 @@ Console.WriteLine(total);</text>
     </block>
   </blocks>
   <resources>
-    <resource id="img1" mediaType="image/png" fileName="page1-image1.png" pixelWidth="16" pixelHeight="16" size="82">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR4AWKQ9+shCY1qICa4RkMJsCEaSgD0VPkBJAgJsQAAAABJRU5ErkJggg==</resource>
+    <resource id="img1" mediaType="image/png" fileName="page1-image1.png" pixelWidth="16" pixelHeight="16" size="<n>"><image></resource>
   </resources>
 </docconverter>

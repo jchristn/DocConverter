@@ -4,7 +4,8 @@
     "title": "DocConverter Reference Document",
     "subject": "Reference content",
     "author": "DocConverter Tests",
-    "created": "2026-09-24T17:21:51Z"
+    "created": "2000-01-01T00:00:00Z",
+    "modified": "2000-01-01T00:00:00Z"
   },
   "blocks": [
     {
@@ -494,8 +495,8 @@
       "fileName": "page1-image1.png",
       "pixelWidth": 16,
       "pixelHeight": 16,
-      "size": 82,
-      "data": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR4AWKQ9+shCY1qICa4RkMJsCEaSgD0VPkBJAgJsQAAAABJRU5ErkJggg=="
+      "size": <n>,
+      "data": "<image>"
     }
   ]
 }

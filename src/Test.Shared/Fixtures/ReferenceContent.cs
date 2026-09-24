@@ -106,11 +106,13 @@ namespace Test.Shared.Fixtures
         public const int ImageSize = 16;
 
         /// <summary>
-        /// The reference image as PNG bytes.
+        /// The reference image as PNG bytes: a 16 by 16 solid blue square. The bytes are fixed rather than encoded at run
+        /// time, because the deflate output of .NET 8 and .NET 10 differs and fixtures must be identical everywhere.
         /// </summary>
+        /// <returns>PNG bytes.</returns>
         public static byte[] ImagePng()
         {
-            return TestImages.SolidPng(ImageSize, ImageSize, 0x1F, 0x4E, 0x8C);
+            return System.Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAF0lEQVR4nGOQ9+shCTGMahgNpZ5hmzQA9FT5AfAHft4AAAAASUVORK5CYII=");
         }
 
         /// <summary>

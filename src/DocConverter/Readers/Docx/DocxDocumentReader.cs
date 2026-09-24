@@ -3,7 +3,6 @@ namespace DocConverter.Readers.Docx
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.IO.Packaging;
     using System.Threading;
     using System.Threading.Tasks;
     using DocConverter.Detection;
@@ -80,8 +79,10 @@ namespace DocConverter.Readers.Docx
                 {
                     throw new DocumentReadException("The input is not a valid DOCX package: " + ex.Message, ex);
                 }
-                catch (FileFormatException ex)
+                catch (Exception ex) when (ex.GetType().Name == "FileFormatException")
                 {
+                    // Matched by name: the type lives in System.IO.Packaging on .NET and in WindowsBase on .NET Framework,
+                    // and naming it would force an assembly load that .NET Framework consumers cannot satisfy.
                     throw new DocumentReadException("The input is not a valid DOCX package: " + ex.Message, ex);
                 }
 

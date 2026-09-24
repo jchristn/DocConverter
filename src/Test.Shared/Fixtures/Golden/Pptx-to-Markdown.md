@@ -32,6 +32,6 @@ Special characters: \<tag> & "quotes" \| pipes \* stars \_ underscores \[bracket
 
 *Simplicity is prerequisite for reliability.*
 
-![Reference image](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAF0lEQVR4nGOQ9+shCTGMahgNpZ5hmzQA9FT5AfAHft4AAAAASUVORK5CYII=)
+![Reference image](data:image/png;base64,<image>)
 
 End of reference document.

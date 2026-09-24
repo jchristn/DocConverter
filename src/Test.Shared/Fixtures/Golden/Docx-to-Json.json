@@ -496,8 +496,8 @@
       "fileName": "image.png",
       "pixelWidth": 16,
       "pixelHeight": 16,
-      "size": 80,
-      "data": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAF0lEQVR4nGOQ9+shCTGMahgNpZ5hmzQA9FT5AfAHft4AAAAASUVORK5CYII="
+      "size": <n>,
+      "data": "<image>"
     }
   ]
 }

@@ -31,7 +31,7 @@ Console.WriteLine(total);
 
 *Simplicity is prerequisite for reliability.*
 
-![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR4AWKQ9+shCY1qICa4RkMJsCEaSgD0VPkBJAgJsQAAAABJRU5ErkJggg==)
+![](data:image/png;base64,<image>)
 
 Grüße aus Zürich.
 
