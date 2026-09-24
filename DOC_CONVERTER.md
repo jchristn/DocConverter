@@ -1314,3 +1314,38 @@ The test images were one 96x64 picture saved as PNG (RGB, RGBA, palette), JPEG (
 - Better detection of unruled PDF tables (for example `BasicExtractionAlgorithm` over whole text regions with a column-alignment heuristic).
 - Native installers per `INSTALLERS.md` (winget, scoop, brew) for `docconv`, if a standalone binary becomes worthwhile.
 - An MCP server wrapper, if agents prefer a tool call to a CLI invocation. It would require `MCP_API.md`.
+
+---
+
+## 17. Implementation notes (0.1.0)
+
+The plan above was executed as written, with these decisions made along the way. They are reflected in the code, the
+tests and `docs/FORMATS.md`.
+
+- **PDF fonts.** `PdfOptions.FontResolver` was not added. MigraDoc 6.2 only supports the process-wide resolver, so
+  DocConverter installs its Liberation resolver once. When a host has already installed its own, DocConverter's is added
+  as `GlobalFontSettings.FallbackFontResolver` and the host keeps priority; `GlyphsUnavailable` is only counted when
+  DocConverter's resolver is the primary one.
+- **PDF rendering is serialized.** A probe showed PDFsharp's shared state racing under concurrent renders (different
+  content streams for identical documents), so one process-wide lock guards rendering. Parallel conversions stay
+  correct and deterministic.
+- **Strikethrough in PDF output.** MigraDoc cannot draw it; the text is kept and `FormattingLost` is raised.
+- **Images in XLSX.** Block images become placeholder rows on the Document sheet with `ImagePlaceholderEmitted`,
+  matching Text, CSV and TSV. Images inside cells or paragraphs are omitted with `ImagesOmitted`.
+- **Model normalization on write.** `ReadAsync` returns the model as read. Before writing, the pipeline clears a bold
+  flag that covers an entire heading or header cell (PDF, RTF and DOCX report bold faces faithfully), and writers skip
+  a section title that repeats the section's leading heading (PPTX slides carry both).
+- **DOCX code blocks** do not keep their language; the DOCX round trip tests account for this.
+- **`EncryptedContentSkipped`** is reserved. Encrypted and password protected inputs are refused with
+  `DocumentReadException` rather than partially read.
+- **.NET Framework consumers.** The DOCX reader matches `FileFormatException` by name, because the type lives in
+  System.IO.Packaging on .NET and in WindowsBase on .NET Framework; naming it forced an assembly load that failed under
+  .NET Framework 4.8. The net48 smoke harness caught this.
+- **Cross-runtime fixtures.** The reference PNG is a fixed byte array and golden files replace image payloads with a
+  marker, because .NET 8 and .NET 10 deflate differently (zlib versus zlib-ng) and PdfPig re-encodes PNG data.
+- **Suites delivered.** Touchstone suites in `src/Test.Shared`: format parsing, detection, text readers and writers,
+  DOCX, XLSX, PPTX, PDF, RTF, images, API contract, cross-cutting behavior (encodings, cancellation, concurrency, OCR
+  stubs, diagnostics, extensibility, options, strict mode), security, the conversion matrix (20 source variants x 11
+  targets x 3 output shapes), round trips and determinism, real-world files, documented losses, golden files and the
+  CLI. 1,554 cases pass on .NET 8 and .NET 10, 1,467 against the netstandard2.0 build, and the net48 smoke harness
+  passes.
