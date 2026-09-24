@@ -22,6 +22,8 @@ namespace Test.Shared
                     DetectionSuite.Build(),
                     TextReadersSuite.Build(),
                     TextWritersSuite.Build(),
+                    ApiContractSuite.Build(),
+                    BehaviorSuite.Build(),
                     DocxSuite.Build(),
                     XlsxSuite.Build(),
                     PptxSuite.Build(),
