@@ -14,17 +14,25 @@ dotnet tool install -g DocConverter.Cli
 docconv --version
 ```
 
-From a clone of the repository, the scripts pack the tool and install it globally. They pick .NET 10 when its SDK is
-installed and .NET 8 otherwise; pass `net8.0` or `net10.0` to choose.
+From a clone of the repository, the scripts pack the tool and install it globally for exactly one target framework.
+Name it as the only argument, or with `--framework` or `-f`; `net8` and `net10` are accepted too. Without one, they pick
+.NET 10 when its SDK is installed and .NET 8 otherwise.
 
 ```
-install-tool.bat            (Windows)      install-tool.bat net8.0
-./install-tool.sh           (macOS, Linux) ./install-tool.sh net8.0
-reinstall-tool.bat / ./reinstall-tool.sh   uninstall, rebuild, reinstall
-remove-tool.bat / ./remove-tool.sh         uninstall
+install-tool.bat net8.0                      (Windows)
+./install-tool.sh net8.0                     (macOS, Linux)
+reinstall-tool.bat --framework net10.0       uninstall, rebuild and reinstall for net10.0 only
+./reinstall-tool.sh -f net8.0
+remove-tool.bat net8.0                       uninstall and delete artifacts/tool-packages/net8.0
+./remove-tool.sh                             uninstall and delete the local packages for every framework
 ```
 
-`reinstall-tool.bat` refuses to run while a `docconv.exe` process is alive, because Windows locks the installed files.
+Install and reinstall pack `DocConverter.Cli` for the chosen framework only, into `artifacts/tool-packages/<framework>`,
+install it with `--framework`, and then check the installed tool store: if it holds any other framework the script fails.
+`install-tool` refuses to run over an existing install and points to `reinstall-tool`. `reinstall-tool` and
+`remove-tool` refuse to run while `docconv` is running (`tasklist` on Windows, `pgrep` on macOS and Linux). The scripts
+honor `DOTNET_CLI_HOME` when it relocates the global tools directory, and the `.sh` scripts run under the bash 3.2 that
+ships with macOS.
 
 ## Commands
 

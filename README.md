@@ -37,7 +37,9 @@ dotnet tool install -g DocConverter.Cli
 ```
 
 From source, `install-tool.bat` on Windows or `./install-tool.sh` on macOS and Linux packs the tool and installs it
-globally (both accept `net8.0` or `net10.0`; the default is .NET 10 when its SDK is present).
+globally for one target framework: `install-tool net8.0` builds and installs the net8.0 tool only (also accepted:
+`--framework net8.0` or `-f net8.0`). Without an argument the default is .NET 10 when its SDK is present, otherwise .NET 8.
+`reinstall-tool` and `remove-tool` take the same argument. See [docs/CLI.md](docs/CLI.md).
 
 ## Quick start
 

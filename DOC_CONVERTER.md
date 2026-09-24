@@ -1343,6 +1343,10 @@ tests and `docs/FORMATS.md`.
   .NET Framework 4.8. The net48 smoke harness caught this.
 - **Cross-runtime fixtures.** The reference PNG is a fixed byte array and golden files replace image payloads with a
   marker, because .NET 8 and .NET 10 deflate differently (zlib versus zlib-ng) and PdfPig re-encodes PNG data.
+- **Tool scripts.** `install-tool`, `reinstall-tool` and `remove-tool` (`.bat` and `.sh`) take one target framework as
+  a positional argument, `--framework` or `-f`. Install and reinstall build and install for that framework only and
+  fail if the installed tool store holds any other framework; remove deletes that framework's local package, or all
+  of them when none is given. They honor `DOTNET_CLI_HOME`.
 - **Suites delivered.** Touchstone suites in `src/Test.Shared`: format parsing, detection, text readers and writers,
   DOCX, XLSX, PPTX, PDF, RTF, images, API contract, cross-cutting behavior (encodings, cancellation, concurrency, OCR
   stubs, diagnostics, extensibility, options, strict mode), security, the conversion matrix (20 source variants x 11
