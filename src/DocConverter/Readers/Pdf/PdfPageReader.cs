@@ -135,15 +135,41 @@ namespace DocConverter.Readers.Pdf
 
         private TableBlock ToTableBlock(Table table, List<Word> words)
         {
+            // Tabula reports ruling artifacts as rows and columns with no text; drop them so the first real row can
+            // become the header.
+            List<List<Cell?>> cells = new List<List<Cell?>>();
+            List<List<string>> texts = new List<List<string>>();
+            int width = 0;
+            foreach (IReadOnlyList<Cell> sourceRow in table.Rows)
+            {
+                List<Cell?> rowCells = new List<Cell?>();
+                List<string> rowTexts = new List<string>();
+                foreach (Cell cell in sourceRow)
+                {
+                    rowCells.Add(cell);
+                    rowTexts.Add(cell == null ? "" : NormalizeSpace(cell.GetText()));
+                }
+
+                if (rowTexts.All(t => t.Length == 0)) continue;
+                cells.Add(rowCells);
+                texts.Add(rowTexts);
+                if (rowTexts.Count > width) width = rowTexts.Count;
+            }
+
+            List<int> keep = new List<int>();
+            for (int c = 0; c < width; c++)
+                if (texts.Any(row => c < row.Count && row[c].Length > 0)) keep.Add(c);
+
             TableBlock block = new TableBlock();
             bool firstRowBold = true;
             bool firstRowHasText = false;
-            for (int r = 0; r < table.Rows.Count; r++)
+            for (int r = 0; r < texts.Count; r++)
             {
                 TableRow row = new TableRow();
-                foreach (Cell cell in table.Rows[r])
+                foreach (int c in keep)
                 {
-                    string text = cell == null ? "" : NormalizeSpace(cell.GetText());
+                    string text = c < texts[r].Count ? texts[r][c] : "";
+                    Cell? cell = c < cells[r].Count ? cells[r][c] : null;
                     row.Cells.Add(new TableCell(text));
                     if (r == 0 && cell != null && text.Length > 0)
                     {
