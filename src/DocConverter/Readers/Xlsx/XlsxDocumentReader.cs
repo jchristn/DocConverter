@@ -6,6 +6,7 @@ namespace DocConverter.Readers.Xlsx
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using DocConverter.Internal;
     using DocConverter.Enums;
     using DocConverter.Exceptions;
     using DocConverter.Model;

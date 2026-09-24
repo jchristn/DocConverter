@@ -51,7 +51,7 @@ Three static factories return fresh, independent instances you can adjust furthe
 |---|---|---|---|
 | `ImageMode` | `ImageModeEnum` | `DataUri` | `DataUri` embeds images as base64 data URIs. `Omit` drops them (`ImagesOmitted`). `Placeholder` writes `[Image: alt, PNG 96x64]` (`ImagePlaceholderEmitted`). `External` writes `![alt](name.png)` and returns the bytes in `ConversionResult.Resources`. |
 | `TableSpanMode` | `TableSpanModeEnum` | `Repeat` | Markdown tables cannot merge cells: `Repeat` copies a spanned cell's text into every position it covers, `Empty` leaves the covered positions blank. Either raises `TableSpansFlattened`. |
-| `EscapeHtml` | `bool` | true | Reserved. The writer always escapes text that would read back as raw HTML, whatever this is set to. |
+| `EscapeHtml` | `bool` | true | When true, a `<` that could open a tag and an `&` that could form an entity are escaped, so text reads back unchanged. When false they pass through and Markdown renderers interpret them as HTML. |
 
 ## HtmlOptions
 

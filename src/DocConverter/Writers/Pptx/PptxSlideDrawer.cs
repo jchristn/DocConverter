@@ -6,7 +6,6 @@ namespace DocConverter.Writers.Pptx
     using DocConverter.Enums;
     using DocConverter.Internal;
     using DocConverter.Model;
-    using DocConverter.Writers.Xlsx;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using A = DocumentFormat.OpenXml.Drawing;

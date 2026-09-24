@@ -1,4 +1,4 @@
-namespace DocConverter.Writers.Xlsx
+namespace DocConverter.Internal
 {
     using System;
     using System.Globalization;

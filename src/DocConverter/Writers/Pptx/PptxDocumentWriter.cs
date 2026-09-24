@@ -6,10 +6,10 @@ namespace DocConverter.Writers.Pptx
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
+    using DocConverter.Internal;
     using DocConverter.Enums;
     using DocConverter.Model;
     using DocConverter.Options;
-    using DocConverter.Writers.Xlsx;
     using DocumentFormat.OpenXml.Packaging;
     using P = DocumentFormat.OpenXml.Presentation;
 

@@ -6,11 +6,11 @@ namespace DocConverter.Readers.Pptx
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using DocConverter.Internal;
     using DocConverter.Enums;
     using DocConverter.Exceptions;
     using DocConverter.Model;
     using DocConverter.Options;
-    using DocConverter.Readers.Xlsx;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using A = DocumentFormat.OpenXml.Drawing;

@@ -237,6 +237,19 @@ namespace Test.Shared.Suites
                 ModelComparer.AssertEqual(m, back, "markdown lists and code round trip");
             });
 
+            s.Add("Markdown_EscapeHtmlOption", "EscapeHtml true protects markup-like text; false lets it through", async ct =>
+            {
+                DocumentModel m = new DocumentModel();
+                m.Blocks.Add(new ParagraphBlock("Use <kbd>Ctrl</kbd> &amp; friends"));
+                StringConversionResult escaped = await c.WriteToStringAsync(m, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false);
+                TestSupport.AssertContains(escaped.Output, "\\<kbd>", "tag escaped by default");
+                TestSupport.AssertContains(escaped.Output, "\\&amp;", "entity escaped by default");
+                ConversionOptions raw = new ConversionOptions();
+                raw.Markdown.EscapeHtml = false;
+                StringConversionResult passthrough = await c.WriteToStringAsync(m, DocumentFormatEnum.Markdown, raw, ct).ConfigureAwait(false);
+                TestSupport.AssertContains(passthrough.Output, "Use <kbd>Ctrl</kbd> &amp; friends", "passed through");
+            });
+
             s.Add("Html_Modes", "Fragment mode omits the document shell; the stylesheet can be turned off", async ct =>
             {
                 ConversionOptions fragment = new ConversionOptions();

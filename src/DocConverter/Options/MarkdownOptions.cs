@@ -19,7 +19,7 @@ namespace DocConverter.Options
         public TableSpanModeEnum TableSpanMode { get; set; } = TableSpanModeEnum.Repeat;
 
         /// <summary>
-        /// When true, characters that would be read as raw HTML are escaped. Default true.
+        /// When true (default), text that a Markdown renderer would read as raw HTML (a less-than sign opening a tag, an ampersand forming an entity) is escaped so it reads back as the same text. When false it passes through, so markup-like text is interpreted by renderers.
         /// </summary>
         public bool EscapeHtml { get; set; } = true;
     }

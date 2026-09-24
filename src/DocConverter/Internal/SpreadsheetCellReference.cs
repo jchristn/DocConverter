@@ -1,4 +1,4 @@
-namespace DocConverter.Readers.Xlsx
+namespace DocConverter.Internal
 {
     using System.Text;
 

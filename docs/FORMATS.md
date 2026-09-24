@@ -125,7 +125,7 @@ merged.
 | `NestedDepthLimited` | Nesting deeper than `MaxNestingDepth` was flattened to text. | Raise `ConverterSettings.MaxNestingDepth`. |
 | `LinkRemovedUnsafe` | A link with a disallowed scheme was written as plain text. | None; this is a safety rule. |
 | `HeadingsInferred` | Headings were inferred from font size or weight rather than declared structure (PDF). | Tune `PdfOptions.HeadingSizeRatio`. |
-| `EncryptedContentSkipped` | Encrypted or protected content could not be read and was skipped. | Remove the protection before converting. |
+| `EncryptedContentSkipped` | Reserved for readers that skip protected parts of an otherwise readable document. No built-in reader raises it in 0.1.0: encrypted and password protected inputs are refused with `DocumentReadException`. | Remove the protection before converting. |
 | `NotesIncluded` | Speaker notes were included as extra content. | Set `PptxOptions.IncludeNotes` to false. |
 | `ContentTruncated` | Content was cut to fit a configured limit. | Raise the limit named in the message. |
 | `GlyphsUnavailable` | Characters outside the embedded PDF font were rendered blank. | Target DOCX or HTML for CJK, Arabic and emoji. |

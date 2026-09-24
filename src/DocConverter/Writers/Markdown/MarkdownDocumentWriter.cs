@@ -91,7 +91,7 @@ namespace DocConverter.Writers.Markdown
                     return Prefix(string.Join("\n\n", parts), "> ", ">");
                 case ImageBlock image:
                     string imageText = RenderImage(image.ResourceId, image.AltText, state);
-                    if (!string.IsNullOrEmpty(image.Caption) && imageText.Length > 0) imageText += "\n\n*" + EscapeText(image.Caption!) + "*";
+                    if (!string.IsNullOrEmpty(image.Caption) && imageText.Length > 0) imageText += "\n\n*" + EscapeText(state, image.Caption!) + "*";
                     return imageText;
                 case ThematicBreakBlock _:
                     return "---";
@@ -102,7 +102,7 @@ namespace DocConverter.Writers.Markdown
                     if (SectionTitles.ShouldRender(section))
                     {
                         int level = Math.Min(6, 2 + sectionDepth);
-                        sectionParts.Add(new string('#', level) + " " + EscapeText(section.Title!));
+                        sectionParts.Add(new string('#', level) + " " + EscapeText(state, section.Title!));
                     }
 
                     foreach (Block child in section.Blocks)
@@ -174,7 +174,7 @@ namespace DocConverter.Writers.Markdown
                     // Without spans the grid lines up with the source cells, so cells keep their inline formatting.
                     string text = !grid.HadSpans && c < source.Cells.Count
                         ? RenderCell(source.Cells[c], state)
-                        : EscapeText(grid.Rows[r][c]);
+                        : EscapeText(state, grid.Rows[r][c]);
                     row.Add(text.Replace("\n", "<br>"));
                 }
 
@@ -196,7 +196,7 @@ namespace DocConverter.Writers.Markdown
 
             sb.Append("| ").Append(string.Join(" | ", separator)).Append(" |");
             for (int r = 1; r < cells.Count; r++) sb.Append("\n| ").Append(string.Join(" | ", cells[r])).Append(" |");
-            if (!string.IsNullOrEmpty(table.Caption)) sb.Append("\n\n*").Append(EscapeText(table.Caption!)).Append('*');
+            if (!string.IsNullOrEmpty(table.Caption)) sb.Append("\n\n*").Append(EscapeText(state, table.Caption!)).Append('*');
             return sb.ToString();
         }
 
@@ -211,7 +211,7 @@ namespace DocConverter.Writers.Markdown
                 else
                 {
                     state.Context.AddWarning(WarningCodeEnum.FormattingLost, "Block content inside table cells (lists, code, quotes, nested tables) was flattened to text because Markdown table cells hold inline content only.");
-                    parts.Add(EscapeText(ModelText.Block(block).Replace("\n", " ")));
+                    parts.Add(EscapeText(state, ModelText.Block(block).Replace("\n", " ")));
                 }
             }
 
@@ -239,7 +239,7 @@ namespace DocConverter.Writers.Markdown
                         return label;
                     }
 
-                    if (label.Length == 0) label = EscapeText(link.Url);
+                    if (label.Length == 0) label = EscapeText(state, link.Url);
                     string title = string.IsNullOrEmpty(link.Title) ? "" : " \"" + link.Title!.Replace("\"", "\\\"") + "\"";
                     return "[" + label + "](" + EscapeUrl(link.Url) + title + ")";
                 case ImageInline image:
@@ -264,7 +264,7 @@ namespace DocConverter.Writers.Markdown
                 return Wrap(code, style & ~InlineStyleEnum.Code, state);
             }
 
-            return Wrap(EscapeText(text.Text), style, state);
+            return Wrap(EscapeText(state, text.Text), style, state);
         }
 
         private static string Wrap(string content, InlineStyleEnum style, RenderState state)
@@ -291,7 +291,7 @@ namespace DocConverter.Writers.Markdown
         {
             ImageModeEnum mode = state.Options.Markdown.ImageMode;
             state.Document.Resources.TryGetValue(resourceId, out BinaryResource? resource);
-            string alt = EscapeText(altText ?? "").Replace("]", "\\]");
+            string alt = EscapeText(state, altText ?? "").Replace("]", "\\]");
 
             if (mode == ImageModeEnum.Omit)
             {
@@ -302,7 +302,7 @@ namespace DocConverter.Writers.Markdown
             if (mode == ImageModeEnum.Placeholder || resource == null)
             {
                 state.Context.AddWarning(WarningCodeEnum.ImagePlaceholderEmitted, "Images were written as text placeholders.");
-                return EscapeText(ImagePlaceholder.Describe(altText, resourceId, state.Document.Resources));
+                return EscapeText(state, ImagePlaceholder.Describe(altText, resourceId, state.Document.Resources));
             }
 
             if (mode == ImageModeEnum.External)
@@ -314,7 +314,7 @@ namespace DocConverter.Writers.Markdown
             return "![" + alt + "](" + DataUri.Encode(resource) + ")";
         }
 
-        private static string EscapeText(string text)
+        private static string EscapeText(RenderState state, string text)
         {
             StringBuilder sb = new StringBuilder(text.Length + 8);
             for (int i = 0; i < text.Length; i++)
@@ -334,14 +334,15 @@ namespace DocConverter.Writers.Markdown
                         sb.Append('\\').Append(c);
                         break;
                     case '<':
-                        // Only a following letter, slash, '!' or '?' could open an HTML tag or autolink.
+                        // Only a following letter, slash, '!' or '?' could open an HTML tag or autolink. With EscapeHtml
+                        // false, markup-like text passes through for renderers that should interpret it.
                         char next = i + 1 < text.Length ? text[i + 1] : ' ';
-                        if (char.IsLetter(next) || next == '/' || next == '!' || next == '?') sb.Append('\\');
+                        if (state.Options.Markdown.EscapeHtml && (char.IsLetter(next) || next == '/' || next == '!' || next == '?')) sb.Append('\\');
                         sb.Append(c);
                         break;
                     case '&':
                         // Only text that looks like an entity reference needs protecting.
-                        if (LooksLikeEntity(text, i)) sb.Append('\\');
+                        if (state.Options.Markdown.EscapeHtml && LooksLikeEntity(text, i)) sb.Append('\\');
                         sb.Append(c);
                         break;
                     default:

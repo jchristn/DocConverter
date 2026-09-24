@@ -11,7 +11,6 @@ namespace DocConverter.Writers.Xlsx
     using DocConverter.Internal;
     using DocConverter.Model;
     using DocConverter.Options;
-    using DocConverter.Readers.Xlsx;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;

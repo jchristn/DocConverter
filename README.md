@@ -91,7 +91,8 @@ from their current position and left positioned after the data.
 
 | From \ To | Md | Html | Txt | Json | Xml | Csv | Tsv | Docx | Xlsx | Pptx | Pdf |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Text, Markdown, HTML, JSON, XML, RTF, DOCX | F | F | F | F | F | P | P | F | P | P or F | F |
+| Text | F | F | F | F | F | P | P | F | P | F | F |
+| Markdown, HTML, JSON, XML, RTF, DOCX | F | F | F | F | F | P | P | F | P | P | F |
 | CSV, TSV | F | F | F | F | F | F | F | F | F | P | F |
 | XLSX | F | F | F | F | F | P | P | F | F | P | F |
 | PPTX | F | F | F | F | F | P | P | F | P | F | F |
@@ -150,7 +151,7 @@ A conversion that loses something still succeeds, and its result says what was l
 
 ```csharp
 StringConversionResult r = await converter.ConvertToStringAsync(wordBytes, DocumentFormatEnum.Docx, DocumentFormatEnum.Text);
-// r.Warnings: FormattingLost (x12): Inline styles have no plain text form and were dropped.
+// r.Warnings: FormattingLost (x12): Inline styles (bold, italic and so on) have no plain text form and were dropped.
 //             ImagePlaceholderEmitted (x2): Images cannot be shown in plain text ...
 ```
 
@@ -200,7 +201,7 @@ services.AddDocConverter(settings => settings.MaxInputBytes = 64 * 1024 * 1024);
 
 ## Extending
 
-Register your own reader or writer for any format, replacing the built-in one or filling a gap:
+Register your own reader or writer for any of the formats in `DocumentFormatEnum`, replacing the built-in one or adding a missing direction (for example an RTF writer):
 
 ```csharp
 converter.RegisterWriter(new MyAsciiDocWriter());

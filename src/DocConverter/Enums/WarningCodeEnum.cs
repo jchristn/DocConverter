@@ -56,7 +56,7 @@ namespace DocConverter.Enums
         HeadingsInferred,
 
         /// <summary>
-        /// Encrypted or protected content could not be read and was skipped.
+        /// Encrypted or protected content could not be read and was skipped. Reserved: no built-in reader raises it in this release; encrypted inputs are refused with DocumentReadException.
         /// </summary>
         EncryptedContentSkipped,
 
