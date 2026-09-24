@@ -18,6 +18,10 @@ namespace Test.Shared
             {
                 List<TestSuiteDescriptor> suites = new List<TestSuiteDescriptor>
                 {
+                    FormatParserSuite.Build(),
+                    DetectionSuite.Build(),
+                    TextReadersSuite.Build(),
+                    TextWritersSuite.Build(),
                     DocxSuite.Build(),
                     XlsxSuite.Build(),
                     PptxSuite.Build(),

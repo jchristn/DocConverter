@@ -25,7 +25,7 @@ namespace DocConverter.Detection
             DetectionResult? binary = DetectBinary(d, offset, length);
             if (binary != null) return binary;
 
-            if (TextFormatHeuristics.LooksBinary(d, offset, length, textSampleBytes) && !TextEncodingDetector.HasUnicodeBom(d, offset, length))
+            if (TextFormatHeuristics.LooksBinary(d, offset, length, textSampleBytes) && !TextEncodingDetector.HasUnicodeBom(d, offset, length) && !TextEncodingDetector.LooksLikeUtf16WithoutBom(d, offset, length))
                 return Unsupported("unrecognized binary data", DetectionConfidenceEnum.Heuristic);
 
             return DetectText(d, offset, length, hint, textSampleBytes);

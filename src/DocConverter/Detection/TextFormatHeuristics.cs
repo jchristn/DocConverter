@@ -103,7 +103,7 @@ namespace DocConverter.Detection
                 if (!heading && _AtxHeading.IsMatch(line)) { heading = true; score += 2; }
                 if (!bullet && _Bullet.IsMatch(line)) { bullet = true; score += 1; }
                 if (!numbered && _Numbered.IsMatch(line)) { numbered = true; score += 1; }
-                if (!fence && _Fence.IsMatch(line)) { fence = true; score += 2; }
+                if (!fence && _Fence.IsMatch(line)) { fence = true; score += 3; }
                 if (!quote && _Quote.IsMatch(line) && line.TrimStart().Length > 1) { quote = true; score += 1; }
                 if (!table && _TableSeparator.IsMatch(line)) { table = true; score += 3; }
                 if (!setext && previous.Trim().Length > 0 && _Setext.IsMatch(line) && line.Trim().Length >= 3) { setext = true; score += 2; }

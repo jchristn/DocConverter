@@ -371,7 +371,7 @@ namespace DocConverter.Writers.Markdown
                 if (trimmed.Length == 0) continue;
                 int lead = line.Length - trimmed.Length;
                 char c = trimmed[0];
-                if (c == '#' || c == '-' || c == '+' || c == '=')
+                if (c == '#' || c == '-' || c == '+' || c == '=' || c == '>')
                 {
                     lines[i] = line.Substring(0, lead) + "\\" + trimmed;
                     continue;

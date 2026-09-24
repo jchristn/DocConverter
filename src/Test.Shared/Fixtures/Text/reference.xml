@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<reference title="DocConverter Reference Document">
+  <heading>Reference Document</heading>
+  <staff>
+    <person><Name>Ada Lovelace</Name><Role>Engineer</Role><Years>7</Years></person>
+    <person><Name>Grace Hopper</Name><Role>Admiral</Role><Years>40</Years></person>
+    <person><Name>Alan Turing</Name><Role>Mathematician</Role><Years>12</Years></person>
+  </staff>
+  <steps>
+    <step>Step one</step>
+    <step>Step two</step>
+    <step>Step three</step>
+  </steps>
+  <notes>
+    <quote>Simplicity is prerequisite for reliability.</quote>
+    <international>Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.</international>
+    <special>Special characters: &lt;tag&gt; &amp; "quotes" | pipes * stars _ underscores [brackets] #hash</special>
+    <closing>End of reference document.</closing>
+  </notes>
+</reference>

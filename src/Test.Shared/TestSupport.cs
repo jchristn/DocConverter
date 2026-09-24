@@ -125,7 +125,8 @@ namespace Test.Shared
         {
             string name = "Fixtures/" + relativePath.Replace('\\', '/');
             Assembly assembly = typeof(TestSupport).Assembly;
-            using (Stream? stream = assembly.GetManifestResourceStream(name))
+            string? actual = ResolveResourceName(name);
+            using (Stream? stream = actual == null ? null : assembly.GetManifestResourceStream(actual))
             {
                 if (stream == null) throw new FileNotFoundException("Embedded fixture not found: " + name);
                 using (MemoryStream ms = new MemoryStream())
@@ -155,9 +156,15 @@ namespace Test.Shared
         public static bool FixtureExists(string relativePath)
         {
             string name = "Fixtures/" + relativePath.Replace('\\', '/');
+            return ResolveResourceName(name) != null;
+        }
+
+        private static string? ResolveResourceName(string normalizedName)
+        {
+            // Resource names carry the build machine's directory separator from %(RecursiveDir); compare normalized.
             foreach (string resource in typeof(TestSupport).Assembly.GetManifestResourceNames())
-                if (resource == name) return true;
-            return false;
+                if (resource.Replace('\\', '/') == normalizedName) return resource;
+            return null;
         }
 
         /// <summary>

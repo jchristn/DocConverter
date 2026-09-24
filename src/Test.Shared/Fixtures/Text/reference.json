@@ -1,0 +1,16 @@
+{
+  "title": "DocConverter Reference Document",
+  "heading": "Reference Document",
+  "staff": [
+    { "Name": "Ada Lovelace", "Role": "Engineer", "Years": 7 },
+    { "Name": "Grace Hopper", "Role": "Admiral", "Years": 40 },
+    { "Name": "Alan Turing", "Role": "Mathematician", "Years": 12 }
+  ],
+  "steps": [ "Step one", "Step two", "Step three" ],
+  "notes": {
+    "quote": "Simplicity is prerequisite for reliability.",
+    "international": "Grüße aus Zürich. 你好，世界。 مرحبا بالعالم. Emoji 🚀✅.",
+    "special": "Special characters: <tag> & \"quotes\" | pipes * stars _ underscores [brackets] #hash",
+    "closing": "End of reference document."
+  }
+}
