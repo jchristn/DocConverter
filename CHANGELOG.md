@@ -20,6 +20,8 @@ release may carry breaking changes.
   not HTML.
 - Nested JSON values in table cells are written as compact one-line JSON, so Markdown table rows stay intact.
 - Markdown table cells turn CRLF, CR and hard line breaks into `<br>` instead of breaking the row.
+- Image alt text that spans lines (common in Office files) is collapsed to one line in Markdown image syntax and
+  placeholders, so the image link no longer breaks.
 - The PDF reader extracts JPEG images wrapped in Flate compression and reports `NoTextLayer` for every scanned page.
 - Empty rows and columns are dropped from tables detected in PDFs.
 

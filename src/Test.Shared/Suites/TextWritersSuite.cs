@@ -58,6 +58,21 @@ namespace Test.Shared.Suites
                 TestSupport.Assert(!r.Warnings.Any(w => w.Code == WarningCodeEnum.ImagePlaceholderEmitted), "no placeholder warning");
             });
 
+            s.Add("Markdown_MultiLineAltText", "Alt text spanning lines stays on one line in placeholders and in embedded image syntax", async ct =>
+            {
+                DocumentModel m = new DocumentModel();
+                m.AddResource(new BinaryResource { Id = "logo", MediaType = "image/png", Data = ReferenceContent.ImagePng() });
+                m.Blocks.Add(new ImageBlock("logo", "Logo\r\n\r\nDescription automatically generated"));
+                StringConversionResult placeholder = await c.WriteToStringAsync(m, DocumentFormatEnum.Markdown, null, ct).ConfigureAwait(false);
+                TestSupport.AssertContains(placeholder.Output, "Image: Logo Description automatically generated, PNG", "placeholder on one line");
+
+                ConversionOptions o = new ConversionOptions();
+                o.Markdown.ImageMode = ImageModeEnum.DataUri;
+                StringConversionResult embedded = await c.WriteToStringAsync(m, DocumentFormatEnum.Markdown, o, ct).ConfigureAwait(false);
+                TestSupport.AssertContains(embedded.Output, "![Logo Description automatically generated](data:image/png;base64,", "image syntax on one line");
+                TestSupport.AssertEqual(1, MarkdownInspector.Inspect(Encoding.UTF8.GetBytes(embedded.Output)).ImageCount, "image parses");
+            });
+
             s.Add("Html_Reference", "HTML output holds every reference element and head metadata, and is script free", async ct =>
             {
                 BytesConversionResult r = await c.WriteToBytesAsync(ReferenceContent.ToModel(), DocumentFormatEnum.Html, null, ct).ConfigureAwait(false);

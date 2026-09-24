@@ -292,7 +292,7 @@ namespace DocConverter.Writers.Markdown
         {
             ImageModeEnum mode = state.Options.Markdown.ImageMode;
             state.Document.Resources.TryGetValue(resourceId, out BinaryResource? resource);
-            string alt = EscapeText(state, altText ?? "").Replace("]", "\\]");
+            string alt = EscapeText(state, ImagePlaceholder.SingleLine(altText)).Replace("]", "\\]");
 
             if (mode == ImageModeEnum.Omit)
             {
