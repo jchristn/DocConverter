@@ -1,0 +1,3 @@
+@echo off
+echo Removing docconv...
+dotnet tool uninstall -g DocConverter.Cli
