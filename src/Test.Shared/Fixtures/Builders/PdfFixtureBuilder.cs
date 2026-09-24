@@ -2,7 +2,9 @@ namespace Test.Shared.Fixtures.Builders
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
+    using System.Text;
     using DocConverter.Writers.Pdf;
     using PdfSharp.Drawing;
     using PdfSharp.Pdf;
@@ -152,6 +154,76 @@ namespace Test.Shared.Fixtures.Builders
                     return ms.ToArray();
                 }
             }
+        }
+
+        /// <summary>
+        /// A hand-written one page PDF with no text whose only image is the 96 by 64 sample JPEG wrapped in FlateDecode
+        /// (Filter [/FlateDecode /DCTDecode]), as scanners commonly produce.
+        /// </summary>
+        /// <returns>PDF bytes.</returns>
+        public static byte[] BuildFlateWrappedJpeg()
+        {
+            byte[] jpeg = TestImages.Sample("sample.jpg");
+            byte[] wrapped;
+            using (MemoryStream zs = new MemoryStream())
+            {
+                using (System.IO.Compression.ZLibStream z = new System.IO.Compression.ZLibStream(zs, System.IO.Compression.CompressionLevel.Optimal, true))
+                {
+                    z.Write(jpeg, 0, jpeg.Length);
+                }
+
+                wrapped = zs.ToArray();
+            }
+
+            string content = "q 192 0 0 128 72 600 cm /Im1 Do Q";
+            List<byte[]> objects = new List<byte[]>
+            {
+                Ascii("<< /Type /Catalog /Pages 2 0 R >>"),
+                Ascii("<< /Type /Pages /Kids [3 0 R] /Count 1 >>"),
+                Ascii("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /XObject << /Im1 4 0 R >> >> /Contents 5 0 R >>"),
+                Concat(Ascii("<< /Type /XObject /Subtype /Image /Width 96 /Height 64 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter [/FlateDecode /DCTDecode] /Length " + wrapped.Length + " >>\nstream\n"), wrapped, Ascii("\nendstream")),
+                Ascii("<< /Length " + content.Length + " >>\nstream\n" + content + "\nendstream")
+            };
+
+            using (MemoryStream pdf = new MemoryStream())
+            {
+                Write(pdf, Ascii("%PDF-1.4\n"));
+                List<long> offsets = new List<long>();
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    offsets.Add(pdf.Position);
+                    Write(pdf, Ascii((i + 1) + " 0 obj\n"));
+                    Write(pdf, objects[i]);
+                    Write(pdf, Ascii("\nendobj\n"));
+                }
+
+                long xref = pdf.Position;
+                StringBuilder table = new StringBuilder();
+                table.Append("xref\n0 ").Append(objects.Count + 1).Append("\n0000000000 65535 f \n");
+                foreach (long offset in offsets) table.Append(offset.ToString("D10", CultureInfo.InvariantCulture)).Append(" 00000 n \n");
+                table.Append("trailer\n<< /Size ").Append(objects.Count + 1).Append(" /Root 1 0 R >>\nstartxref\n").Append(xref).Append("\n%%EOF\n");
+                Write(pdf, Ascii(table.ToString()));
+                return pdf.ToArray();
+            }
+        }
+
+        private static byte[] Ascii(string text)
+        {
+            return Encoding.ASCII.GetBytes(text);
+        }
+
+        private static byte[] Concat(params byte[][] parts)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                foreach (byte[] part in parts) ms.Write(part, 0, part.Length);
+                return ms.ToArray();
+            }
+        }
+
+        private static void Write(Stream stream, byte[] bytes)
+        {
+            stream.Write(bytes, 0, bytes.Length);
         }
 
         /// <summary>

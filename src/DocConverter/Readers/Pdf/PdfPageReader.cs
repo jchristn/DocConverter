@@ -2,6 +2,8 @@ namespace DocConverter.Readers.Pdf
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
     using System.Linq;
     using System.Text;
     using DocConverter.Enums;
@@ -90,13 +92,15 @@ namespace DocConverter.Readers.Pdf
             int imageCount = 0;
             foreach (IPdfImage image in _Page.GetImages())
             {
+                imageCount++;
                 if (image.IsImageMask) continue;
                 ImageBlock? imageBlock = ToImageBlock(image, pageNumber);
                 if (imageBlock == null) continue;
-                imageCount++;
                 elements.Add(new PdfPageElement(image.BoundingBox.Top, imageBlock));
             }
 
+            // A page with images and no letters is a scan, whether or not its images could be extracted (JBIG2 and
+            // CCITT scans cannot be), so every such page is reported.
             if (_Page.Letters.Count == 0 && imageCount > 0)
             {
                 _Context.AddWarning(
@@ -613,6 +617,30 @@ namespace DocConverter.Readers.Pdf
             return null;
         }
 
+        private static byte[]? TryInflateJpeg(byte[] raw)
+        {
+            // zlib header: compression method 8 (deflate) in the low nibble, and a header checksum divisible by 31.
+            if (raw.Length < 8 || (raw[0] & 0x0F) != 8 || ((raw[0] << 8) | raw[1]) % 31 != 0) return null;
+            try
+            {
+                using (MemoryStream input = new MemoryStream(raw, 2, raw.Length - 2, false))
+                using (DeflateStream deflate = new DeflateStream(input, CompressionMode.Decompress))
+                using (MemoryStream output = new MemoryStream())
+                {
+                    byte[] head = new byte[3];
+                    int read = deflate.Read(head, 0, 3);
+                    if (read < 3 || head[0] != 0xFF || head[1] != 0xD8 || head[2] != 0xFF) return null;
+                    output.Write(head, 0, 3);
+                    deflate.CopyTo(output);
+                    return output.ToArray();
+                }
+            }
+            catch (InvalidDataException)
+            {
+                return null;
+            }
+        }
+
         private ImageBlock? ToImageBlock(IPdfImage image, int pageNumber)
         {
             byte[] raw;
@@ -628,9 +656,16 @@ namespace DocConverter.Readers.Pdf
 
             byte[]? data = null;
             string mediaType = "image/png";
+            byte[]? inflated = raw.Length > 3 && raw[0] == 0xFF && raw[1] == 0xD8 ? null : TryInflateJpeg(raw);
             if (raw.Length > 3 && raw[0] == 0xFF && raw[1] == 0xD8 && raw[2] == 0xFF)
             {
                 data = raw;
+                mediaType = "image/jpeg";
+            }
+            else if (inflated != null)
+            {
+                // A JPEG wrapped in FlateDecode ([/FlateDecode /DCTDecode]): the inflated stream is the JPEG file.
+                data = inflated;
                 mediaType = "image/jpeg";
             }
             else

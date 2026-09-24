@@ -189,6 +189,20 @@ namespace Test.Shared.Suites.Pdf
                     new Random(7).NextBytes(junk);
                     await TestSupport.ExpectThrowsAsync<DocumentReadException>(() => Read(junk, null), "garbage PDF").ConfigureAwait(false);
                 }),
+                Case("ReadFlateWrappedJpeg", "A scanned page whose JPEG is wrapped in FlateDecode yields the JPEG and NoTextLayer", async ct =>
+                {
+                    using (Converter converter = new Converter())
+                    {
+                        BytesConversionResult r = await converter.ConvertToBytesAsync(PdfFixtureBuilder.BuildFlateWrappedJpeg(), DocumentFormatEnum.Pdf, DocumentFormatEnum.Json).ConfigureAwait(false);
+                        DocumentModel model = await converter.ReadAsync(r.Output, DocumentFormatEnum.Json).ConfigureAwait(false);
+                        BinaryResource image = model.Resources.Values.Single();
+                        TestSupport.AssertEqual("image/jpeg", image.MediaType, "extracted as JPEG");
+                        TestSupport.Assert(image.Data.SequenceEqual(TestImages.Sample("sample.jpg")), "the JPEG bytes are exactly the original");
+                        TestSupport.AssertEqual<int?>(96, image.PixelWidth, "width");
+                        TestSupport.Assert(r.Warnings.Any(w => w.Code == WarningCodeEnum.NoTextLayer), "NoTextLayer");
+                        TestSupport.Assert(!r.Warnings.Any(w => w.Code == WarningCodeEnum.UnknownElementSkipped), "nothing skipped");
+                    }
+                }),
                 Case("ReadRealWorldSample", "The DocumentAtom sample.pdf reads", async ct =>
                 {
                     DocumentModel model = await Read(FormatFixtures.Load("RealWorld/DocumentAtom/sample.pdf"), null).ConfigureAwait(false);
