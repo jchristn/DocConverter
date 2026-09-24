@@ -1,0 +1,74 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Restore
+        run: dotnet restore src/DocConverter.sln
+
+      - name: Build (warnings are errors)
+        run: dotnet build src/DocConverter.sln --no-restore -c Release
+
+      - name: Touchstone runner (net8.0)
+        run: dotnet run --project src/Test.Automated -c Release -f net8.0 --no-build
+
+      - name: Touchstone runner (net10.0)
+        run: dotnet run --project src/Test.Automated -c Release -f net10.0 --no-build -- --results results.json
+
+      - name: Touchstone runner against the netstandard2.0 build
+        run: dotnet run --project src/Test.Automated -c Release -f net10.0 -p:DocConverterTestNetStandard=true
+
+      - name: .NET Framework smoke test (Windows only)
+        if: runner.os == 'Windows'
+        run: dotnet run --project src/Test.NetFramework -c Release
+
+      - name: xUnit
+        run: dotnet test src/Test.Xunit -c Release --no-build
+
+      - name: NUnit
+        run: dotnet test src/Test.Nunit -c Release --no-build
+
+      - name: Tool smoke test
+        shell: bash
+        run: |
+          set -e
+          PKG="$RUNNER_TEMP/docconv-pkg"
+          TOOLS="$RUNNER_TEMP/docconv-tools"
+          dotnet pack src/DocConverter.Cli/DocConverter.Cli.csproj -c Release -p:TargetFrameworks=net10.0 -o "$PKG"
+          dotnet tool install --tool-path "$TOOLS" --add-source "$PKG" DocConverter.Cli --version 0.1.0
+          "$TOOLS/docconv" --version
+          printf '# Smoke\n\nHello **tool**.\n\n| a | b |\n|---|---|\n| 1 | 2 |\n' > "$RUNNER_TEMP/in.md"
+          "$TOOLS/docconv" convert -i "$RUNNER_TEMP/in.md" -o "$RUNNER_TEMP/out.docx"
+          "$TOOLS/docconv" convert -i "$RUNNER_TEMP/in.md" -o "$RUNNER_TEMP/out.pdf"
+          "$TOOLS/docconv" convert -i "$RUNNER_TEMP/out.docx" -o - --to md | grep -q "Hello"
+          "$TOOLS/docconv" convert -i "$RUNNER_TEMP/out.pdf" -o - --to txt | grep -q "Smoke"
+          cat "$RUNNER_TEMP/in.md" | "$TOOLS/docconv" convert -i - -o - --from md --to html --html-fragment | grep -q "<h1>Smoke</h1>"
+          "$TOOLS/docconv" detect -i "$RUNNER_TEMP/out.docx" --json | grep -q '"format":"Docx"'
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: results.json
