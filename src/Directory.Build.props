@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Authors>Joel Christner</Authors>
+    <Company>Joel Christner</Company>
+    <Product>DocConverter</Product>
+    <Copyright>Copyright (c) Joel Christner</Copyright>
+    <PackageProjectUrl>https://github.com/jchristn/DocConverter</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jchristn/DocConverter</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+</Project>

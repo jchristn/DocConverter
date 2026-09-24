@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!--
+    Normal build: reference the library and the CLI for the current target framework.
+    -p:DocConverterTestNetStandard=true forces the library's netstandard2.0 build instead, so the full suite
+    exercises the netstandard2.0 code paths. The CLI is excluded in that mode because it would bring a second
+    copy of the library into the graph.
+  -->
+  <ItemGroup Condition="'$(DocConverterTestNetStandard)' != 'true'">
+    <ProjectReference Include="..\DocConverter\DocConverter.csproj" />
+    <ProjectReference Include="..\DocConverter.Cli\DocConverter.Cli.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DocConverterTestNetStandard)' == 'true'">
+    <ProjectReference Include="..\DocConverter\DocConverter.csproj" SetTargetFramework="TargetFramework=netstandard2.0" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(DocConverterTestNetStandard)' == 'true'">
+    <DefineConstants>$(DefineConstants);DOCCONVERTER_NETSTANDARD_TEST</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.5.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
+    <PackageReference Include="Markdig" Version="1.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="PdfPig" Version="0.1.16" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.2.4" />
+    <PackageReference Include="Touchstone.Core" Version="0.1.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fixtures\**\*" Exclude="Fixtures\**\*.cs;Fixtures\**\PROVENANCE.md" LogicalName="Fixtures/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Smoke harness for real .NET Framework consumers. It references the library, which resolves to the library's
+    netstandard2.0 build, exactly as a .NET Framework application would. Touchstone targets net8.0 and net10.0 only,
+    so this project deliberately does not use Test.Shared. Windows only. Not part of DocConverter.sln.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocConverter\DocConverter.csproj" />
+  </ItemGroup>
+
+</Project>
