@@ -275,6 +275,7 @@ net10.0 -p:DocConverterTestNetStandard=true` runs everything against the netstan
 - [docs/CLI.md](docs/CLI.md): the `docconv` tool
 - [docs/DOCUMENT_MODEL.md](docs/DOCUMENT_MODEL.md): the intermediate model and its canonical JSON and XML
 - [docs/EXTENDING.md](docs/EXTENDING.md): custom readers, writers and OCR providers
+- [CHANGELOG.md](CHANGELOG.md): release history and dependency updates
 
 ## Acknowledgments
 

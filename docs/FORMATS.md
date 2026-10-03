@@ -163,7 +163,7 @@ Framework 4.8.
 
 ## Third-party components
 
-Every dependency is permissively licensed. Resolved on 2026-09-24.
+Every dependency is permissively licensed. Resolved on 2026-10-03.
 
 | Package | Version | License | Used for |
 |---|---|---|---|
@@ -171,10 +171,10 @@ Every dependency is permissively licensed. Resolved on 2026-09-24.
 | PdfPig | 0.1.16 | Apache-2.0 | PDF reading |
 | Tabula | 1.0.1 | MIT | PDF tables |
 | PDFsharp, PDFsharp-MigraDoc | 6.2.4 | MIT | PDF writing |
-| HtmlAgilityPack | 1.12.4 | MIT | HTML reading |
+| HtmlAgilityPack | 1.13.0 | MIT | HTML reading |
 | CsvHelper | 33.1.0 | MS-PL OR Apache-2.0 | CSV and TSV |
 | Markdig | 1.4.0 | BSD-2-Clause | Markdown reading |
-| Microsoft.Extensions.DependencyInjection.Abstractions | 8.0.2 | MIT | `AddDocConverter()` |
+| Microsoft.Extensions.DependencyInjection.Abstractions | 10.0.12 | MIT | `AddDocConverter()` |
 | Microsoft.Extensions.Logging.Abstractions, System.IO.Packaging, System.Security.Cryptography.Pkcs | 8.0.x | MIT | Transitive (PDFsharp, OpenXml) |
-| System.Text.Json, Microsoft.Bcl.AsyncInterfaces, System.Diagnostics.DiagnosticSource, System.Memory and their dependencies | 9.0.10, 4.6.3 | MIT | netstandard2.0 only |
+| System.Text.Json, Microsoft.Bcl.AsyncInterfaces, System.Diagnostics.DiagnosticSource, System.Memory and their dependencies | 10.0.12, 4.6.3 | MIT | netstandard2.0 only |
 | Liberation Sans and Liberation Mono 2.1.5 (embedded fonts) | | SIL Open Font License 1.1 | PDF output; the license ships in the package as `fonts/OFL.txt` |

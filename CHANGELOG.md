@@ -5,6 +5,18 @@ All notable changes to DocConverter are documented here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). While the version is below 1.0.0, any
 release may carry breaking changes.
 
+## [0.1.2] - 2026-10-03
+
+### Changed
+
+- Dependencies updated: HtmlAgilityPack 1.13.0 (from 1.12.4) and Microsoft.Extensions.DependencyInjection.Abstractions
+  10.0.12 (from 8.0.2). On netstandard2.0, System.Text.Json, Microsoft.Bcl.AsyncInterfaces and
+  System.Diagnostics.DiagnosticSource move to 10.0.12 (from 9.0.10).
+- Test and tooling packages updated: Touchstone 0.2.0, NUnit 5.0.0, NUnit.Analyzers 4.15.0, NUnit3TestAdapter 6.3.0,
+  Microsoft.NET.Test.Sdk 18.10.1, coverlet.collector 10.1.0 and BenchmarkDotNet 0.15.8.
+- New tests cover HTML entity decoding and unclosed inline tags, and `AddDocConverter()` under `ValidateOnBuild` and
+  `ValidateScopes`.
+
 ## [0.1.1] - 2026-09-24
 
 ### Changed

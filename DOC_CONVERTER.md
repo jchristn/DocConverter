@@ -218,13 +218,13 @@ The versions below are the ones the Phase 0 spikes ran against on 2026-09-24 (Se
 | Tabula | 1.0.1 | MIT | yes (verified) | PDF table extraction (on PdfPig; requires PdfPig 0.1.14 or later) |
 | PDFsharp | 6.2.4 | MIT | yes (verified) | PDF write (low level, image support checks) |
 | PDFsharp-MigraDoc | 6.2.4 | MIT | yes (verified) | PDF write (flow layout: paragraphs, lists, tables) |
-| HtmlAgilityPack | 1.12.4 | MIT | yes (verified) | HTML read. 1.13.0 is out; adopt it only after the HTML suites pass against it. |
+| HtmlAgilityPack | 1.13.0 | MIT | yes (verified) | HTML read |
 | CsvHelper | 33.1.0 | MS-PL OR Apache-2.0 | yes (verified) | CSV and TSV read and write |
 | Markdig | 1.4.0 | BSD-2-Clause | yes (verified) | Markdown read (CommonMark + GFM pipe tables, task lists, autolinks via `UseAdvancedExtensions`, which needs `using Markdig;`). Replaces DocumentAtom's hand-rolled Markdown splitter, which breaks fenced code that contains blank lines. |
-| Microsoft.Extensions.DependencyInjection.Abstractions | 8.0.2 | MIT | yes | `AddDocConverter()` |
-| System.Text.Json | 9.0.10 | MIT | netstandard2.0 only | JSON read and write |
-| Microsoft.Bcl.AsyncInterfaces | 9.0.10 | MIT | netstandard2.0 only | `IAsyncEnumerable`, `IAsyncDisposable` |
-| System.Diagnostics.DiagnosticSource | 9.0.10 | MIT | netstandard2.0 only | `ActivitySource`, `Meter` |
+| Microsoft.Extensions.DependencyInjection.Abstractions | 10.0.12 | MIT | yes | `AddDocConverter()` |
+| System.Text.Json | 10.0.12 | MIT | netstandard2.0 only | JSON read and write |
+| Microsoft.Bcl.AsyncInterfaces | 10.0.12 | MIT | netstandard2.0 only | `IAsyncEnumerable`, `IAsyncDisposable` |
+| System.Diagnostics.DiagnosticSource | 10.0.12 | MIT | netstandard2.0 only | `ActivitySource`, `Meter` |
 | System.Memory | 4.6.3 | MIT | netstandard2.0 only | `Span<T>` and friends |
 
 The netstandard2.0-only references sit in a conditioned `ItemGroup` with an explanatory comment, as in TextChunker. On net8.0 and net10.0 these ship in the BCL.
@@ -239,16 +239,16 @@ Callers can supply their own resolver through `PdfOptions.FontResolver`. Noto Sa
 
 ### 4.4 Complete dependency and license enumeration
 
-Direct and transitive NuGet dependencies of the `DocConverter` library, resolved per target framework by `dotnet list package --include-transitive` on 2026-09-24. `DocConverter.Cli` adds nothing beyond a project reference to the library.
+Direct and transitive NuGet dependencies of the `DocConverter` library, resolved per target framework by `dotnet list package --include-transitive` on 2026-10-03. `DocConverter.Cli` adds nothing beyond a project reference to the library.
 
 | Package | Version | License | Author | Direct? | netstandard2.0 | net8.0 | net10.0 |
 |---|---|---|---|---|---|---|---|
 | CsvHelper | 33.1.0 | MS-PL OR Apache-2.0 | Josh Close | direct | x | x | x |
 | DocumentFormat.OpenXml | 3.5.1 | MIT | Microsoft | direct | x | x | x |
 | DocumentFormat.OpenXml.Framework | 3.5.1 | MIT | Microsoft | via OpenXml | x | x | x |
-| HtmlAgilityPack | 1.12.4 | MIT | ZZZ Projects et al. | direct | x | x | x |
+| HtmlAgilityPack | 1.13.0 | MIT | ZZZ Projects et al. | direct | x | x | x |
 | Markdig | 1.4.0 | BSD-2-Clause | Alexandre Mutel | direct | x | x | x |
-| Microsoft.Extensions.DependencyInjection.Abstractions | 8.0.2 | MIT | Microsoft | direct | x | x | x |
+| Microsoft.Extensions.DependencyInjection.Abstractions | 10.0.12 | MIT | Microsoft | direct | x | x | x |
 | Microsoft.Extensions.Logging.Abstractions | 8.0.3 | MIT | Microsoft | via PDFsharp | x | x | x |
 | PdfPig | 0.1.16 | Apache-2.0 | UglyToad | direct | x | x | x |
 | PDFsharp | 6.2.4 | MIT | PDFsharp Team | via MigraDoc | x | x | x |
@@ -256,20 +256,20 @@ Direct and transitive NuGet dependencies of the `DocConverter` library, resolved
 | System.IO.Packaging | 8.0.1 (10.0.2 on net10.0) | MIT | Microsoft | via OpenXml | x | x | x |
 | System.Security.Cryptography.Pkcs | 8.0.1 | MIT | Microsoft | via PDFsharp | x | x | x |
 | Tabula | 1.0.1 | MIT | BobLd | direct | x | x | x |
-| Microsoft.Bcl.AsyncInterfaces | 9.0.10 | MIT | Microsoft | direct | x | | |
+| Microsoft.Bcl.AsyncInterfaces | 10.0.12 | MIT | Microsoft | direct | x | | |
 | Microsoft.Bcl.HashCode | 6.0.0 | MIT | Microsoft | via PdfPig | x | | |
 | Microsoft.CSharp | 4.7.0 | MIT | Microsoft | via CsvHelper | x | | |
 | System.Buffers | 4.6.1 | MIT | Microsoft | via System.Memory | x | | |
-| System.Diagnostics.DiagnosticSource | 9.0.10 | MIT | Microsoft | direct | x | | |
+| System.Diagnostics.DiagnosticSource | 10.0.12 | MIT | Microsoft | direct | x | | |
 | System.Formats.Asn1 | 8.0.1 | MIT | Microsoft | via Pkcs | x | | |
-| System.IO.Pipelines | 9.0.10 | MIT | Microsoft | via System.Text.Json | x | | |
+| System.IO.Pipelines | 10.0.12 | MIT | Microsoft | via System.Text.Json | x | | |
 | System.Memory | 4.6.3 | MIT | Microsoft | direct | x | | |
 | System.Numerics.Vectors | 4.6.1 | MIT | Microsoft | via System.Memory | x | | |
 | System.Runtime.CompilerServices.Unsafe | 6.1.2 | MIT | Microsoft | via System.Memory | x | | |
 | System.Security.Cryptography.Cng | 5.0.0 | MIT | Microsoft | via Pkcs | x | | |
-| System.Text.Encodings.Web | 9.0.10 | MIT | Microsoft | via System.Text.Json | x | | |
-| System.Text.Json | 9.0.10 | MIT | Microsoft | direct | x | | |
-| System.Threading.Tasks.Extensions | 4.5.4 | MIT (corefx LICENSE.TXT) | Microsoft | via AsyncInterfaces | x | | |
+| System.Text.Encodings.Web | 10.0.12 | MIT | Microsoft | via System.Text.Json | x | | |
+| System.Text.Json | 10.0.12 | MIT | Microsoft | direct | x | | |
+| System.Threading.Tasks.Extensions | 4.6.3 | MIT (corefx LICENSE.TXT) | Microsoft | via AsyncInterfaces | x | | |
 | NETStandard.Library | 2.0.3 | MIT | Microsoft | implicit SDK reference | build only | | |
 | Microsoft.NETCore.Platforms | 1.1.0 | Microsoft .NET Library License | Microsoft | via NETStandard.Library | build only | | |
 
@@ -973,10 +973,10 @@ The tests follow `BACKEND_TEST_ARCHITECTURE.md` exactly. Test logic lives once, 
 
 - All test projects target `net8.0;net10.0`, with `ImplicitUsings` disabled, `Nullable` enabled and `IsPackable` false.
 - Package versions match TextChunker, which are the newest in use across the reference repositories:
-  - Touchstone.Core, Touchstone.Cli, Touchstone.XunitAdapter and Touchstone.NunitAdapter 0.1.12
+  - Touchstone.Core, Touchstone.Cli, Touchstone.XunitAdapter and Touchstone.NunitAdapter 0.2.0
   - xunit 2.9.3, xunit.runner.visualstudio 4.0.0
-  - Microsoft.NET.Test.Sdk 18.9.0, coverlet.collector 10.0.1
-  - NUnit 4.6.1, NUnit.Analyzers 4.14.0, NUnit3TestAdapter 6.2.0
+  - Microsoft.NET.Test.Sdk 18.10.1, coverlet.collector 10.1.0
+  - NUnit 5.0.0, NUnit.Analyzers 4.15.0, NUnit3TestAdapter 6.3.0
 - `Test.Shared` references `DocConverter`, `DocConverter.Cli` and `Touchstone.Core`. It also references OpenXml, PdfPig, PDFsharp, HtmlAgilityPack, CsvHelper and Markdig directly, for fixture builders and output inspectors.
 - `Test.Shared` never writes to the console.
 - Assertions throw `TestAssertionException`, a specific type. TextChunker's `TestSupport` throws plain `Exception`, which the requirements forbid.

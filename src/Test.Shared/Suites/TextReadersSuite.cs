@@ -270,6 +270,15 @@ namespace Test.Shared.Suites
                 TestSupport.Assert(m.Blocks.Count == 3, "three paragraphs, got " + m.Blocks.Count);
             });
 
+            s.Add("Html_EntitiesAndMalformed", "HTML entities decode and unclosed inline tags still yield all text", async ct =>
+            {
+                DocumentModel m = await c.ReadAsync("<p>Fish &amp; chips &lt;3 &#169; &eacute;t&eacute;</p><p>open <b>bold</p><p>after</p>", DocumentFormatEnum.Html, null, ct).ConfigureAwait(false);
+                ContentSnapshot snap = ModelInspector.Inspect(m);
+                TestSupport.Assert(snap.ContainsText("Fish & chips <3 \u00a9 \u00e9t\u00e9"), "entities decoded");
+                TestSupport.Assert(snap.ContainsText("bold"), "text inside the unclosed bold tag");
+                TestSupport.Assert(snap.ContainsText("after"), "text after the unclosed tag");
+            });
+
             s.Add("Html_TaskList", "Checkbox list items become a task list", async ct =>
             {
                 DocumentModel m = await c.ReadAsync("<ul><li><input type=\"checkbox\" checked> a</li><li><input type=\"checkbox\"> b</li></ul>", DocumentFormatEnum.Html, null, ct).ConfigureAwait(false);

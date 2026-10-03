@@ -288,6 +288,24 @@ namespace Test.Shared.Suites
                 TestSupport.ExpectThrows<ArgumentNullException>(() => ServiceCollectionExtensions.AddDocConverter(null!), "null services");
             });
 
+            s.AddSync("DependencyInjectionValidated", "AddDocConverter passes ValidateOnBuild and ValidateScopes and resolves the singleton from a scope", () =>
+            {
+                ServiceCollection services = new ServiceCollection();
+                services.AddDocConverter();
+                ServiceProviderOptions options = new ServiceProviderOptions();
+                options.ValidateOnBuild = true;
+                options.ValidateScopes = true;
+                using (ServiceProvider provider = services.BuildServiceProvider(options))
+                {
+                    IConverter root = provider.GetRequiredService<IConverter>();
+                    using (IServiceScope scope = provider.CreateScope())
+                    {
+                        IConverter scoped = scope.ServiceProvider.GetRequiredService<IConverter>();
+                        TestSupport.Assert(ReferenceEquals(root, scoped), "singleton across scopes");
+                    }
+                }
+            });
+
             // Options.
             s.AddSync("OptionRanges", "Every ranged option rejects values outside its documented range and accepts the edges", () =>
             {
